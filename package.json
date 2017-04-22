@@ -4,14 +4,15 @@
   "description": "Buy and Sell textbooks at your school",
   "author": "Tom Koker <me@tomkoker.com>",
   "license": "AGPL-3.0+",
-  "repository" : {
-    "type" : "git"
-  , "url" : "https://github.com/tomkoker/bookswitch.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomkoker/bookswitch.git"
   },
   "scripts": {},
   "dependencies": {
     "axios": "^0.16.1",
-    "vue": "^2.2.1"
+    "vue": "^2.2.1",
+    "vue-router": "^2.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
