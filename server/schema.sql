@@ -1,0 +1,13 @@
+
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY,
+  username TEXT NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE listings (
+  id INTEGER PRIMARY KEY,
+  book TEXT NOT NULL,
+  price DECIMAL NOT NULL
+);

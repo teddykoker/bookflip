@@ -1,0 +1,26 @@
+{
+  "name": "bookswitch",
+  "version": "0.0.1",
+  "description": "Buy and Sell textbooks at your school",
+  "private": true,
+  "author": "Tom Koker <me@tomkoker.com>",
+  "license": "AGPL-3.0+",
+  "scripts": {},
+  "dependencies": {
+    "axios": "^0.16.1",
+    "vue": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-latest": "^6.0.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.8",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.2.1",
+    "webpack": "^2.2.0"
+  }
+}

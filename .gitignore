@@ -1,0 +1,11 @@
+
+# node
+node_modules/
+build.js
+
+# flask
+venv
+*.pyc
+database.db
+
+
