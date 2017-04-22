@@ -30,6 +30,6 @@ python
 
 Build and start the server:
 ```bash
-webpack --watch
+webpack
 python run.py
 ```
