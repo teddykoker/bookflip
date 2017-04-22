@@ -3,6 +3,11 @@
 [Tom Koker](http://tomkoker.com)
 
 ## Run Locally
+Clone and change directory:
+```bash
+git clone https://github.com/tomkoker/bookswitch && cd bookswitch
+```
+
 Create python virtual environment:
 ```bash
 virtualenv venv
