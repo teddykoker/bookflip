@@ -26,7 +26,7 @@ def register():
   user = query_db('SELECT * FROM users WHERE username = ?',
                   request.json['username'], one=True)
 
-  if user is None:
+  if user is not None:
     # TODO: report user already exists
     return ""
 
