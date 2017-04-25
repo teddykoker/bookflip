@@ -36,7 +36,11 @@ export default {
     submit: function() {
       var self = this;
       if(self.user.username && self.user.password){
-          axios.post('/api/signup', {user: self.user}).then(function(response){
+          axios.post('/api/signup', {
+              username: self.user.username,
+              password: self.user.password
+            })
+          .then(function(response){
             console.log(response);
             self.user.username = '';
             self.user.password = '';
