@@ -1,7 +1,7 @@
 import sqlite3
 import bcrypt
 
-from flask import request, jsonify
+from flask import request, jsonify, session
 
 from server import app
 from db import query_db
@@ -52,13 +52,24 @@ def login():
     return ""
 
   if bcrypt.checkpw(request.json['password'], user['password']):
-    # TODO: login successful request stuff
-    return ""
+    # login successful
+    session["user_id"] = user["id"]
+    return jsonify({'result': 'success'})
 
-
-@app.route('/me')
-def me():
+  # TODO: return wrong password
   return ""
+
+@app.route('/api/logout')
+def logout():
+  session.pop('user_id', None)
+  return jsonify({'result': 'success'})
+
+
+@app.route('/api/me')
+def me():
+  if 'user_id' in session:
+    return jsonify({'status': 'LoggedIn'})
+  return jsonify({'status': ''})
 
 
 @app.route('/', defaults={'path': ''})
