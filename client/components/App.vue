@@ -25,26 +25,26 @@ export default {
     }
   },
   methods: {
-   checkAuth: function(){
-     var self = this;
-     axios.get('/api/me').then(function(response) {
-       if(response.data.loggedIn){
-         self.authenticated = true;
-       }
-     }).catch(function(error) {
-       console.log(error);
-     });
-   },
-   logout: function(){
-     var self = this;
-     axios.get('/api/logout').then(function(response) {
-       if(!response.data.loggedIn){
-         self.authenticated = false;
-       }
-     }).catch(function(error) {
-       console.log(error);
-     });
-   }
+    checkAuth: function(){
+      var self = this;
+      axios.get('/api/me').then(function(response) {
+        if(response.data.status == "LoggedIn"){
+          self.authenticated = true;
+        }
+      }).catch(function(error) {
+        console.log(error);
+      });
+    },
+    logout: function(){
+      var self = this;
+      axios.get('/api/logout').then(function(response) {
+        if(response.data.result == "success"){
+          self.authenticated = false;
+        }
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
   },
   beforeMount: function(){
     this.checkAuth();

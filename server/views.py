@@ -59,7 +59,7 @@ def login():
     # TODO: report wrong username
     return ""
 
-  if bcrypt.checkpw(request.json['password'], user['password']):
+  if bcrypt.checkpw(request.json['password'].encode('utf-8'), user['password'].encode('utf-8')):
     # login successful
     session["user_id"] = user["id"]
     return jsonify({'result': 'success'})
