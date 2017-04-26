@@ -17,24 +17,28 @@ def all_listings():
   listings = query_db('SELECT * FROM listings')
   return jsonify(listings)
 
+
 @app.route('/api/users')
 def all_users():
   users = query_db('SELECT * FROM users')
   return jsonify(users)
 
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
-  if not request.json or not 'username' in request.json or not 'password' in request.json:
+  if not request.json or 'username' not in request.json or \
+     'password' not in request.json:
     abort(400)
 
   user = query_db('SELECT * FROM users WHERE username = ?',
-    (request.json['username'],), one=True)
+                  (request.json['username'],), one=True)
 
   if user is not None:
     # TODO: report user already exists
     return ""
 
-  hashed = bcrypt.hashpw(request.json['password'].encode('utf-8'), bcrypt.gensalt())
+  hashed = bcrypt.hashpw(request.json['password'].encode('utf-8'),
+                         bcrypt.gensalt())
 
   query_db('INSERT INTO users (username,password) VALUES (?,?)',
            (request.json['username'], hashed))
@@ -45,27 +49,31 @@ def signup():
   # registration was successful
   return jsonify({'result': 'success'})
 
+
 @app.route('/api/login', methods=['POST'])
 def login():
-  if not request.json or not 'username' in request.json or not 'password' in request.json:
+  if not request.json or 'username' not in request.json or \
+     'password' not in request.json:
     abort(400)
 
   print(request.json['username'] + " " + request.json['password'])
 
   user = query_db('SELECT * FROM users WHERE username = ?',
-    (request.json['username'],), one=True)
+                  (request.json['username'],), one=True)
 
   if user is None:
     # TODO: report wrong username
     return ""
 
-  if bcrypt.checkpw(request.json['password'].encode('utf-8'), user['password'].encode('utf-8')):
+  if bcrypt.checkpw(request.json['password'].encode('utf-8'),
+                    user['password'].encode('utf-8')):
     # login successful
     session["user_id"] = user["id"]
     return jsonify({'result': 'success'})
 
   # TODO: return wrong password
   return ""
+
 
 @app.route('/api/logout')
 def logout():
