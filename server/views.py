@@ -17,6 +17,10 @@ def all_listings():
   listings = query_db('SELECT * FROM listings')
   return jsonify(listings)
 
+@app.route('/api/users')
+def all_users():
+  users = query_db('SELECT * FROM users')
+  return jsonify(users)
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -34,6 +38,9 @@ def signup():
 
   query_db('INSERT INTO users (username,password) VALUES (?,?)',
            (request.json['username'], hashed))
+
+  users = query_db('SELECT * FROM users')
+  print users
 
   # registration was successful
   return jsonify({'result': 'success'})
