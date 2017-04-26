@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="app">
-    <h1>bookswitch</h1>
+    <div class="page-header"><h1>bookswitch</h1></div>
       <router-link v-show="!authenticated" to="/login" ><a>Login</a></router-link>
       <router-link v-show="!authenticated" to="/signup" ><a>Signup</a></router-link>
       <a v-show="authenticated" v-on:click="logout" href="#">Logout</a>

@@ -15,7 +15,7 @@
       </div>
     </div>
   </fieldset>
-    or   <router-link to="/signup"><a>signup</a></router-link> for an account
+    or <router-link to="/signup"><a>signup</a></router-link> for an account
   </div>
 </template>
 
