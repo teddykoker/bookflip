@@ -1,6 +1,6 @@
-# bookswitch
-[![Dependency Status](https://david-dm.org/tomkoker/bookswitch.svg)](https://david-dm.org/tomkoker/bookswitch)
-[![Code Climate](https://codeclimate.com/github/tomkoker/bookswitch/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookswitch) 
+# bookflip
+[![Dependency Status](https://david-dm.org/tomkoker/bookflip.svg)](https://david-dm.org/tomkoker/bookflip)
+[![Code Climate](https://codeclimate.com/github/tomkoker/bookflip/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookflip) 
 
 ## Author
 [Tom Koker](http://tomkoker.com)
@@ -8,7 +8,7 @@
 ## Installing
 Clone and change directory:
 ```bash
-git clone https://github.com/tomkoker/bookswitch && cd bookswitch
+git clone https://github.com/tomkoker/bookflip && cd bookflip
 ```
 
 Create python virtual environment:
@@ -39,4 +39,4 @@ python run.py
 
 ## License
 
-[AGPL-3.0](https://github.com/tomkoker/bookswitch/blob/master/LICENSE)
+[AGPL-3.0](https://github.com/tomkoker/bookflip/blob/master/LICENSE)

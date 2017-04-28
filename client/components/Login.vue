@@ -43,10 +43,11 @@ export default {
               password: self.user.password
             })
           .then(function(response){
-            if(response.data.result == "success"){
+            if(response.data.status == "success"){
               // set authenticated to true in parent
               self.$parent.authenticated = true;
 
+              // redirect to home
               self.$root.$router.push('/');
             } else {
               self.user.password = '';

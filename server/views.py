@@ -34,8 +34,8 @@ def signup():
                     (request.json['username'],), one=True)
 
     if user is not None:
-        # TODO: report user already exists
-        return ""
+        # report user already exists
+        return ({'status': 'failed'})
 
     hashed = bcrypt.hashpw(request.json['password'].encode('utf-8'),
                            bcrypt.gensalt())
@@ -44,7 +44,7 @@ def signup():
              (request.json['username'], hashed))
 
     # registration was successful
-    return jsonify({'result': 'success'})
+    return jsonify({'status': 'success'})
 
 
 @app.route('/api/login', methods=['POST'])
@@ -59,30 +59,32 @@ def login():
                     (request.json['username'],), one=True)
 
     if user is None:
-        # TODO: report wrong username
-        return ""
+        # report wrong username
+        return jsonify({'status': 'failed'})
 
     if bcrypt.checkpw(request.json['password'].encode('utf-8'),
                       user['password'].encode('utf-8')):
         # login successful
         session["user_id"] = user["id"]
-        return jsonify({'result': 'success'})
+        return jsonify({'status': 'success'})
 
-    # TODO: return wrong password
-    return ""
+    # report wrong password
+    return ({'status': 'failed'})
 
 
 @app.route('/api/logout')
 def logout():
     session.pop('user_id', None)
-    return jsonify({'result': 'success'})
+    return jsonify({'status': 'success'})
 
 
 @app.route('/api/me')
 def me():
     if 'user_id' in session:
-        return jsonify({'status': 'LoggedIn'})
-    return jsonify({'status': ''})
+        return jsonify({'status': 'success'},
+                       {'data': { 'authenticated': True}})
+    return jsonify({'status': 'success'},
+                   {'data': { 'authenticated': False}})
 
 
 @app.route('/', defaults={'path': ''})

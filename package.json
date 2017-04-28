@@ -1,12 +1,12 @@
 {
-  "name": "bookswitch",
+  "name": "bookflip",
   "version": "0.0.1",
   "description": "Buy and Sell textbooks at your school",
   "author": "Tom Koker <me@tomkoker.com>",
   "license": "AGPL-3.0+",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomkoker/bookswitch.git"
+    "url": "https://github.com/tomkoker/bookflip.git"
   },
   "scripts": {},
   "dependencies": {
