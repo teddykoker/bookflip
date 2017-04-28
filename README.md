@@ -4,7 +4,7 @@
 ## Author
 [Tom Koker](http://tomkoker.com)
 
-## Run Locally
+## Installing
 Clone and change directory:
 ```bash
 git clone https://github.com/tomkoker/bookswitch && cd bookswitch
