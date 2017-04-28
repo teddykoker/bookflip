@@ -1,6 +1,6 @@
 # bookswitch
 [![Dependency Status](https://david-dm.org/tomkoker/bookswitch.svg)](https://david-dm.org/tomkoker/bookswitch)
-[![Code Climate](https://codeclimate.com/github/tomkoker/bookswitch/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookswitch/coverage) 
+[![Code Climate](https://codeclimate.com/github/tomkoker/bookswitch/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookswitch) 
 
 ## Author
 [Tom Koker](http://tomkoker.com)
