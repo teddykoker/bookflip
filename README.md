@@ -1,8 +1,10 @@
 # bookswitch
+[![Dependency Status](https://david-dm.org/atom/atom.svg)](https://david-dm.org/atom/atom)
+
 ## Author
 [Tom Koker](http://tomkoker.com)
 
-## Run Locally
+## Installing
 Clone and change directory:
 ```bash
 git clone https://github.com/tomkoker/bookswitch && cd bookswitch
@@ -33,3 +35,7 @@ Build and start the server:
 webpack
 python run.py
 ```
+
+## License
+
+[AGPL-3.0](https://github.com/tomkoker/bookswitch/blob/master/LICENSE)
