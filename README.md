@@ -1,5 +1,5 @@
 # bookswitch
-[![Dependency Status](https://david-dm.org/tomkoker/bookswitch.svg)](https://david-dm.org/tomkoker/bookswitch.svg)
+[![Dependency Status](https://david-dm.org/tomkoker/bookswitch.svg)](https://david-dm.org/tomkoker/bookswitch)
 
 ## Author
 [Tom Koker](http://tomkoker.com)
