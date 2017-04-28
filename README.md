@@ -1,4 +1,6 @@
 # bookswitch
+[![Dependency Status](https://david-dm.org/tomkoker/bookswitch.svg)](https://david-dm.org/tomkoker/bookswitch.svg)
+
 ## Author
 [Tom Koker](http://tomkoker.com)
 
@@ -33,3 +35,7 @@ Build and start the server:
 webpack
 python run.py
 ```
+
+## License
+
+[AGPL-3.0](https://github.com/tomkoker/bookswitch/blob/master/LICENSE)
