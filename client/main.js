@@ -20,7 +20,7 @@ let router = new VueRouter({
   ]
 })
 
-new Vue({
+new Vue({ // eslint-disable-line no-new
   el: '#app',
   router,
   render: h => h(App)

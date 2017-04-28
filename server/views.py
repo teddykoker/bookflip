@@ -43,12 +43,6 @@ def signup():
     query_db('INSERT INTO users (username,password) VALUES (?,?)',
              (request.json['username'], hashed))
 
-    users = query_db('SELECT * FROM users')
-    print users
-    do_something()
-
-# Add some extra indentation on the conditional
-
     # registration was successful
     return jsonify({'result': 'success'})
 
