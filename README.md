@@ -1,5 +1,5 @@
 # bookflip
-![Logo](https://github.com/tomkoker/bookflip/blob/dev/server/static/logo.svg)
+![Logo](https://raw.githubusercontent.com/tomkoker/bookflip/dev/server/static/logo.svg)
 [![Dependency Status](https://david-dm.org/tomkoker/bookflip.svg)](https://david-dm.org/tomkoker/bookflip)
 [![Code Climate](https://codeclimate.com/github/tomkoker/bookflip/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookflip) 
 
