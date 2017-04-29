@@ -3,21 +3,27 @@
 
 
 
-    <div class="page-header"><h1>bookflip</h1></div>
-
+    <div class="page-header"> 
+      <img class="logoImg" src="/logo.svg"/> 
+      <h1 class="logoText">bookflip</h1> 
+    </div>
+    <div class="page-header">
       <router-link v-show="!authenticated" to="/login" > <a>Login</a> </router-link>
       <router-link v-show="!authenticated" to="/signup" > <a>Signup</a> </router-link>
 
       <a v-show="authenticated" v-on:click="logout" href="#">Logout</a>
-
+    </div>
+    <div>
       <ul class="nav nav-tabs">
         <router-link tag="li" to="/buy" active-class="active"> <a>Buy</a> </router-link>
         <router-link tag="li" to="/sell" active-class="active"> <a>Sell</a> </router-link>
       </ul>
-
+    </div>
+    <div>
       <br>
 
       <router-view></router-view>
+    </div>
 
   </div>
 </template>
