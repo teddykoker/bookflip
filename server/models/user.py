@@ -1,6 +1,10 @@
 import bcrypt
 from ..db import query_db
 
+class User(object):
+    def __init__(self, )
+
+
 
 def all_users():
     return query_db('SELECT * FROM users')
