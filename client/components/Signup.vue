@@ -6,6 +6,9 @@
         <input placeholder="Username" class="form-control" v-model="user.username">
       </div>
       <div class="form-group">
+        <input placeholder="Email" class="form-control" v-model="user.email">
+      </div>
+      <div class="form-group">
         <input type="password" placeholder="Password" class="form-control" v-model="user.password">
       </div>
       <div class="form-group">
@@ -27,6 +30,7 @@ export default {
     return {
       user: {
         username: '',
+        email: '',
         password: ''
       }
     }
@@ -35,14 +39,16 @@ export default {
   methods: {
     submit: function() {
       var self = this;
-      if(self.user.username && self.user.password){
+      if(self.user.email && self.user.password){
           axios.post('/api/signup', {
               username: self.user.username,
+              email: self.user.email,
               password: self.user.password
             })
           .then(function(response){
             console.log(response);
             self.user.username = '';
+            self.user.email = '';
             self.user.password = '';
           }).catch(function(error){
             console.log(error);

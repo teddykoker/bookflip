@@ -38,7 +38,7 @@ export default {
     logout: function(){
       var self = this;
       axios.get('/api/logout').then(function(response) {
-        if(response.data.result == "success"){
+        if(response.data.status == "success"){
           self.authenticated = false;
         }
       }).catch(function(error) {

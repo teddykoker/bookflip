@@ -6,7 +6,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <input type="number" class="form-control" placeholder="ISBN" v-model="listing.book.isbn">
+          <input class="form-control" placeholder="ISBN" v-model="listing.book.isbn">
         </div>
         <button class="btn btn-primary" v-on:click="getInfo">Next</button>
         <br>
@@ -32,9 +32,6 @@
         <div class="form-group">
           <textarea class="form-control" placeholder="Description" v-model="listing.description"></textarea>
         </div>
-        <div class="form-group">
-          <input type="email" class="form-control" placeholder="Email" v-model="listing.email">
-        </div>
         <button class="btn btn-primary" v-on:click="submit">Submit</button>
       </div>
     </div>
@@ -49,7 +46,6 @@ export default {
   data: function() {
     return {
       listing: {
-        email: '',
         book: {
           isbn:'',
           title:'',
@@ -72,7 +68,6 @@ export default {
           axios.post('/api/new-listing', {listing: listing}).then(function(response){
             console.log(response);
             self.listing = {
-              email: '',
               book: {
                 isbn:'',
                 title:'',

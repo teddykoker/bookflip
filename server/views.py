@@ -26,9 +26,17 @@ def all_users():
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    if (not request.json or 'username' not in request.json or
-            'password' not in request.json):
+    if (not request.json or 'email' not in request.json or
+            'password' not in request.json or
+            'username' not in request.json):
         abort(400)
+
+    user = query_db('SELECT * FROM users WHERE email = ?',
+                    (request.json['email'],), one=True)
+
+    if user is not None:
+        # report user already exists
+        return ({'status': 'failed'})
 
     user = query_db('SELECT * FROM users WHERE username = ?',
                     (request.json['username'],), one=True)
@@ -40,8 +48,8 @@ def signup():
     hashed = bcrypt.hashpw(request.json['password'].encode('utf-8'),
                            bcrypt.gensalt())
 
-    query_db('INSERT INTO users (username,password) VALUES (?,?)',
-             (request.json['username'], hashed))
+    query_db('INSERT INTO users (username,email,password) VALUES (?,?,?)',
+             (request.json['username'], request.json['email'], hashed))
 
     # registration was successful
     return jsonify({'status': 'success'})
@@ -59,7 +67,7 @@ def login():
                     (request.json['username'],), one=True)
 
     if user is None:
-        # report wrong username
+        # report wrong email
         return jsonify({'status': 'failed'})
 
     if bcrypt.checkpw(request.json['password'].encode('utf-8'),
@@ -69,7 +77,7 @@ def login():
         return jsonify({'status': 'success'})
 
     # report wrong password
-    return ({'status': 'failed'})
+    return jsonify({'status': 'failed'})
 
 
 @app.route('/api/logout')
