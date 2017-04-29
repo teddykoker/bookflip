@@ -6,6 +6,7 @@ from flask import request, jsonify, session, abort
 from server import app
 from db import query_db
 
+from models import user
 
 @app.route('/api/new', methods=['POST', 'GET'])
 def new_listing():
@@ -20,8 +21,7 @@ def all_listings():
 
 @app.route('/api/users')
 def all_users():
-    users = query_db('SELECT * FROM users')
-    return jsonify(users)
+    return jsonify(user.all_users())
 
 
 @app.route('/api/signup', methods=['POST'])
