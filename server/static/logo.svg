@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 
 <!-- Stand Alone Logo -->
 <!-- Robaire Galliath -->
 <!--   38 April 17    -->
 
-<svg width = "55" height = "70">
+<svg xmlns:svg = "http://www.w3.org/2000/svg" 
+	 xmlns = "http://www.w3.org/2000/svg" 
+	 version = "1.0"
+	 width = "55" height = "70">
 
 	<!-- F Body -->
 	<path d = "M35 70 l0 -50 a20 20 0 0 1 20 -20 l0 10 a10 10 0 0 0 -10 10 l0 50 Z" fill = "#444"/>
