@@ -29,9 +29,6 @@
         <div class="form-group">
           <input type="number" placeholder="Price" class="form-control" v-model="listing.price">
         </div>
-        <div class="form-group">
-          <textarea class="form-control" placeholder="Description" v-model="listing.description"></textarea>
-        </div>
         <button class="btn btn-primary" v-on:click="submit">Submit</button>
       </div>
     </div>
@@ -52,8 +49,7 @@ export default {
           author:''
         },
         condition:'',
-        price:'',
-        description:''
+        price:''
       }
     }
   },
@@ -63,8 +59,8 @@ export default {
       console.log(this.listing.book.isbn)
       var self = this;
       var listing = this.listing;
-      if(listing.email && listing.book.isbn && listing.book.title &&
-        listing.condition && listing.book.author && listing.price && listing.description){
+      if(listing.book.isbn && listing.book.title && listing.condition &&
+        listing.book.author && listing.price){
           axios.post('/api/new-listing', {listing: listing}).then(function(response){
             console.log(response);
             self.listing = {
@@ -74,8 +70,7 @@ export default {
                 author:''
               },
               condition:'',
-              price:'',
-              description:''
+              price:''
             }
           }).catch(function(error){
             console.log(error);

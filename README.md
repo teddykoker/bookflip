@@ -1,4 +1,3 @@
-![Logo](server/static/logo.svg)
 # bookflip
 
 [![Dependency Status](https://david-dm.org/tomkoker/bookflip.svg)](https://david-dm.org/tomkoker/bookflip)
