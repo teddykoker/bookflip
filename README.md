@@ -8,22 +8,23 @@
 ## Installing
 
 ### Dependencies
-*Virtual Env*:
+**Virtual Env**:
 ```bash
 sudo apt-get install python-pip
 ```
 
-*Node*:
+**Node**:
 ```bash
 sudo apt-get install nodejs
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
 
-*Webpack*:
+**Webpack**:
 ```bash
 sudo npm install -g webpack
 ```
 
+### Installation
 Clone and change directory:
 ```bash
 git clone https://github.com/tomkoker/bookflip && cd bookflip
