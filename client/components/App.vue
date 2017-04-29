@@ -1,17 +1,27 @@
 <template>
   <div class="container" id="app">
+
+
+
     <div class="page-header"><h1>bookflip</h1></div>
-      <router-link v-show="!authenticated" to="/login" ><a>Login</a></router-link>
-      <router-link v-show="!authenticated" to="/signup" ><a>Signup</a></router-link>
+
+      <router-link v-show="!authenticated" to="/login" > <a>Login</a> </router-link>
+      <router-link v-show="!authenticated" to="/signup" > <a>Signup</a> </router-link>
+
       <a v-show="authenticated" v-on:click="logout" href="#">Logout</a>
+
       <ul class="nav nav-tabs">
-        <router-link tag="li" to="/buy" active-class="active"><a>Buy</a></router-link>
-        <router-link tag="li" to="/sell" active-class="active"><a>Sell</a></router-link>
+        <router-link tag="li" to="/buy" active-class="active"> <a>Buy</a> </router-link>
+        <router-link tag="li" to="/sell" active-class="active"> <a>Sell</a> </router-link>
       </ul>
+
       <br>
+
       <router-view></router-view>
+
   </div>
 </template>
+
 
 <script>
 
