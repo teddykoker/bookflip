@@ -7,16 +7,19 @@ from server import app
 from db import query_db
 
 from models.user import User
+from models.book import Book
+from models.listing import Listing
 
-
-@app.route('/api/new', methods=['POST', 'GET'])
-def new_listing():
-    return str(request.get_json())
 
 
 @app.route('/api/all')
 def all_listings():
     listings = query_db('SELECT * FROM listings')
+
+    for listing in listings:
+        listing['book'] = query_db('SELECT * FROM books WHERE id = ?',
+                           (listing['book_id'],), one=True)
+
     return jsonify(listings)
 
 
@@ -75,6 +78,24 @@ def login():
 def logout():
     session.pop('user_id', None)
     return jsonify({'status': 'success'})
+
+
+@app.route('/api/new-listing', methods=['POST'])
+def new_listing():
+    print request.json['listing']['book']
+    book = Book.with_isbn(request.json['listing']['book']['isbn'])
+    if book is None:
+        book = Book(request.json['listing']['book']['isbn'],
+                    request.json['listing']['book']['title'])
+        book.save()
+
+    print book.id
+
+    listing = Listing(book.id, request.json['listing']['price'])
+    listing.save()
+
+    return jsonify({'status': 'success'})
+
 
 
 @app.route('/api/me')

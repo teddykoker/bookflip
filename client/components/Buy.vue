@@ -6,7 +6,7 @@
             <h5>{{ listing.book.title }}</h5>
           </div>
           <div class="panel-body">
-            <p>{{ listing.description }}</p>
+            <p>${{ listing.price }}</p>
           </div>
         </div>
       </div>

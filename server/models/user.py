@@ -27,6 +27,7 @@ class User(object):
         if not self.saved:
             query_db('INSERT INTO users (username,email,password) VALUES (?,?,?)',
                      (self.username, self.email, self.password))
+            self = User.with_username(self.username)
 
 
     def check_password(self, password):
