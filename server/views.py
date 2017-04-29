@@ -6,7 +6,8 @@ from flask import request, jsonify, session, abort
 from server import app
 from db import query_db
 
-from models import user
+from models import user as User
+
 
 @app.route('/api/new', methods=['POST', 'GET'])
 def new_listing():
@@ -21,7 +22,7 @@ def all_listings():
 
 @app.route('/api/users')
 def all_users():
-    return jsonify(user.all_users())
+    return jsonify(User.all_users())
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -31,25 +32,16 @@ def signup():
             'username' not in request.json):
         abort(400)
 
-    user = query_db('SELECT * FROM users WHERE email = ?',
-                    (request.json['email'],), one=True)
+    if not User.unique_email(request.json['email']):
+        # report user with email already exists
+        return jsonify({'status': 'failed'})
 
-    if user is not None:
-        # report user already exists
-        return ({'status': 'failed'})
+    if not User.unique_username(request.json['username']):
+        # report user with username already exists
+        return jsonify({'status': 'failed'})
 
-    user = query_db('SELECT * FROM users WHERE username = ?',
-                    (request.json['username'],), one=True)
-
-    if user is not None:
-        # report user already exists
-        return ({'status': 'failed'})
-
-    hashed = bcrypt.hashpw(request.json['password'].encode('utf-8'),
-                           bcrypt.gensalt())
-
-    query_db('INSERT INTO users (username,email,password) VALUES (?,?,?)',
-             (request.json['username'], request.json['email'], hashed))
+    User.create_user(request.json['username'], request.json['email'],
+                     request.json['password'])
 
     # registration was successful
     return jsonify({'status': 'success'})
@@ -90,9 +82,9 @@ def logout():
 def me():
     if 'user_id' in session:
         return jsonify({'status': 'success'},
-                       {'data': { 'authenticated': True}})
+                       {'data': {'authenticated': True}})
     return jsonify({'status': 'success'},
-                   {'data': { 'authenticated': False}})
+                   {'data': {'authenticated': False}})
 
 
 @app.route('/', defaults={'path': ''})
