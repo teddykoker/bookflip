@@ -6,6 +6,25 @@
 [Tom Koker](http://tomkoker.com)
 
 ## Installing
+
+### Dependencies
+**Virtual Env**:
+```bash
+sudo apt-get install python-pip
+```
+
+**Node**:
+```bash
+sudo apt-get install nodejs
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+```
+
+**Webpack**:
+```bash
+sudo npm install -g webpack
+```
+
+### Installation
 Clone and change directory:
 ```bash
 git clone https://github.com/tomkoker/bookflip && cd bookflip
@@ -13,7 +32,7 @@ git clone https://github.com/tomkoker/bookflip && cd bookflip
 
 Create python virtual environment:
 ```bash
-virtualenv venv
+virtualenv -p /usr/bin/python2.7 venv
 source venv/bin/activate
 ```
 
