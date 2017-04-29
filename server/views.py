@@ -6,7 +6,7 @@ from flask import request, jsonify, session, abort
 from server import app
 from db import query_db
 
-from models import user as User
+from models.user import User
 
 
 @app.route('/api/new', methods=['POST', 'GET'])
@@ -32,16 +32,19 @@ def signup():
             'username' not in request.json):
         abort(400)
 
-    if not User.unique_email(request.json['email']):
+    user = User(request.json['username'], request.json['email'],
+                User.hash_password(request.json['password']))
+
+    if not user.unique_email():
         # report user with email already exists
         return jsonify({'status': 'failed'})
 
-    if not User.unique_username(request.json['username']):
+    if not user.unique_username():
         # report user with username already exists
         return jsonify({'status': 'failed'})
 
-    User.create_user(request.json['username'], request.json['email'],
-                     request.json['password'])
+    # save user to database
+    user.save()
 
     # registration was successful
     return jsonify({'status': 'success'})
@@ -53,19 +56,15 @@ def login():
             'password' not in request.json):
         abort(400)
 
-    print(request.json['username'] + " " + request.json['password'])
-
-    user = query_db('SELECT * FROM users WHERE username = ?',
-                    (request.json['username'],), one=True)
+    user = User.with_username(request.json['username'])
 
     if user is None:
-        # report wrong email
+        # report wrong username
         return jsonify({'status': 'failed'})
 
-    if bcrypt.checkpw(request.json['password'].encode('utf-8'),
-                      user['password'].encode('utf-8')):
+    if user.check_password(request.json['password']):
         # login successful
-        session["user_id"] = user["id"]
+        session["user_id"] = user.id
         return jsonify({'status': 'success'})
 
     # report wrong password
