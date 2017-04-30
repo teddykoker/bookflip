@@ -25,7 +25,7 @@ def all_listings():
 
 @app.route('/api/users')
 def all_users():
-    return jsonify(User.all_users())
+    return jsonify(User.all())
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -35,19 +35,17 @@ def signup():
             'username' not in request.json):
         abort(400)
 
-    user = User(request.json['username'], request.json['email'],
-                User.hash_password(request.json['password']))
-
-    if not user.unique_email():
+    if User.with_email(request.json['email']) is not None:
         # report user with email already exists
         return jsonify({'status': 'failed'})
 
-    if not user.unique_username():
+    if User.with_username(request.json['username'] is not None):
         # report user with username already exists
         return jsonify({'status': 'failed'})
 
     # save user to database
-    user.save()
+    User.add(request.json['username'], request.json['email'],
+             User.hash_password(request.json['password']))
 
     # registration was successful
     return jsonify({'status': 'success'})
