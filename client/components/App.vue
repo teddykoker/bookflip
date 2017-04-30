@@ -4,7 +4,7 @@
 
 
     <div class="page-header"> 
-      <img class="logoImg" src="/logo.svg"/> 
+      <img class="logoImg" src="/assets/logo.svg"/> 
       <h1 class="logoText">bookflip</h1> 
     </div>
     <div class="page-header">
