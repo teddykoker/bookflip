@@ -1,6 +1,44 @@
 import bcrypt
 from ..db import query_db
 
+
+class User(object):
+    def __init__(self, id):
+        self._id = id
+
+    @property
+    def username(self):
+        return query_db('SELECT username FROM users WHERE id = ?',
+                        (self._id,), one=True)
+
+
+    @property
+    def email(self):
+        return query_db('SELECT email FROM users WHERE id = ?',
+                        (self._id,), one=True)
+
+
+    @property
+    def password(self):
+        return query_db('SELECT password FROM users WHERE id = ?',
+                        (self._id,), one=True)
+
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'),
+                              self.password.encode('utf-8'))
+
+
+    @staticmethod
+    def all()
+        ids = query_db('SELECT id FROM users')
+        for user_id in ids:
+            yield User(user_id)
+
+
+
+
+
 class User(object):
 
     def __init__(self, username, email, password, id=None, saved=False):
