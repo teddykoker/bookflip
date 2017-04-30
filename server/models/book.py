@@ -14,12 +14,16 @@ class Book(object):
     @property
     def isbn(self):
         return query_db('SELECT isbn FROM books WHERE id = ?',
-                        (self.id,))['isbn']
+                        (self.id,), one=True)['isbn']
 
     @property
     def title(self):
-        return query_db('SELECT title FROM book WHERE id = ?',
-                        (self.id,))['title']
+        return query_db('SELECT title FROM books WHERE id = ?',
+                        (self.id,), one=True)['title']
+
+
+    def serialized(self):
+        return {'title': self.title, 'isbn': self.isbn}
 
 
     @staticmethod

@@ -14,13 +14,7 @@ from models.listing import Listing
 
 @app.route('/api/all')
 def all_listings():
-    listings = query_db('SELECT * FROM listings')
-
-    for listing in listings:
-        listing['book'] = query_db('SELECT * FROM books WHERE id = ?',
-                           (listing['book_id'],), one=True)
-
-    return jsonify(listings)
+    return jsonify([listing.serialized() for listing in Listing.all()])
 
 
 @app.route('/api/users')
@@ -83,20 +77,15 @@ def new_listing():
     print request.json['listing']['book']
     book = Book.with_isbn(request.json['listing']['book']['isbn'])
     if book is None:
-        book = Book(request.json['listing']['book']['isbn'],
+        Book.add(request.json['listing']['book']['isbn'],
                     request.json['listing']['book']['title'])
-        book.save()
+        book = Book.with_isbn(request.json['listing']['book']['isbn'])
 
-    print book.id
-
-    listing = Listing(book.id, request.json['listing']['price'])
-    listing.save()
+    Listing.add(book, request.json['listing']['price'])
 
     return jsonify({'status': 'success'})
 
 
-
-@app.route('/api/me')
 def me():
     if 'user_id' in session:
         return jsonify({'status': 'success'},

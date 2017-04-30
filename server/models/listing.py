@@ -1,6 +1,6 @@
 import bcrypt
 from ..db import query_db
-from user import User
+from book import Book
 
 class Listing(object):
 
@@ -15,14 +15,18 @@ class Listing(object):
     @property
     def book(self):
         book_id = query_db('SELECT book_id FROM listings WHERE id = ?',
-                           (id,), one=True)['book_id']
+                           (self.id,), one=True)['book_id']
         return Book(book_id)
 
 
     @property
     def price(self):
         return query_db('SELECT price FROM listings WHERE id = ?',
-                        (self.id,))['price']
+                        (self.id,), one=True)['price']
+
+
+    def serialized(self):
+        return {'book': self.book.serialized(), 'price': self.price}
 
 
     @staticmethod
