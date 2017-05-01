@@ -16,12 +16,12 @@ body {
 }
 
 #header {
-	height: 12em;
+	height: 180px;
+	width: 100%;
 }
 
 #logoText {
 	font-family: 'Raleway', sans-serif;
-	font-weight: bold;
 	font-size: 56pt;
 	font-color: #444;
 	vertical-align: bottom;
@@ -30,13 +30,45 @@ body {
 }
 
 #logoImg {
-	height: 100%;
+	min-height: 100%;
 }
 
 #navbar {
-	height: 2.25em;
+	height: 50px;
 }
 
-.page-header{
+#transaction, #account, #schoolName {
+	font-family: 'Raleway', sans-serif;
+	font-size: 24pt;
+	font-color: #000;
+	padding: 5px 0px;
+}
+
+#schoolName {
+	float: left;
+}
+
+#account {
+	float: right;
+}
+
+#transaction {
+	float: left;
+	margin-left: 40%;
+}
+
+.page-header, #header {
 	border-bottom: 1px solid #CCC;
+}
+
+#header {
+	padding-bottom: 9px;
+}
+
+#searchBar {
+	height: 40px;
+	background-color: #CCC;
+	display: block;
+	font-size: 16pt;
+	margin-bottom: 16px;
 }

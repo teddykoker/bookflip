@@ -1,6 +1,6 @@
 <template>
   <!-- Main Page Container -->
-  <div class="container" id="home">
+  <div class="container" id="app">
 
   <!-- Left Hand Side Bar -->
   <div class="col-sm-2">
@@ -10,17 +10,40 @@
   <!-- Main (Center) Content -->
   <div class="col-sm-8">
 
-    <!-- Header -->
-    <div class="page-header" id="header"> 
-      <img id="logoImg" src="/assets/logo.svg"/>
-      <h1 id="logoText"> bookflip </h1> 
+    <div class="page-header">
+      <!-- Header -->
+      <div id="header"> 
+        <img id="logoImg" src="/assets/logo.svg"/>
+        <h1 id="logoText"> bookflip </h1> 
+      </div>
+
+      <!-- Navigation Bar -->
+      <div id="navbar" class="text-center">
+
+        <span id="schoolName"> WPI </span>
+
+        <span id="transaction" v-if="authenticated">
+        <router-link to="/buy"> Buy </router-link>
+        |
+        <router-link to="/sell"> Sell </router-link>
+        </span>
+
+        <span id="transaction" v-else-if="!authenticated">
+        <router-link to="/buy"> Buy </router-link>
+        </span>
+
+        <span id="account">
+        <router-link to="/login"> Login </router-link>
+        |
+        <router-link to="/signup"> Signup </router-link>
+        </span>
+
+      </div>
     </div>
 
-    <!-- Navigation Bar -->
-    <div class="page-header" id="navbar">
-      <span> </span>
-      <span> </span>
-      <span> </span>
+    <!-- Search Bar -->
+    <div v-if="true">
+        <input type="text" class="form-control" id="searchBar" placeholder="Search for a book...">
     </div>
 
     <!-- Dynamicaly Loaded Content -->
