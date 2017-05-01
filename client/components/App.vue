@@ -1,62 +1,82 @@
-<template>
+ <template>
   <!-- Main Page Container -->
-  <div class="container" id="app">
+  <div>
 
-  <!-- Left Hand Side Bar -->
-  <div class="col-sm-2">
-    <p> this is home </p>
-  </div>
+    <!-- Main Header Content -->
+    <div class="container-fluid">
 
-  <!-- Main (Center) Content -->
-  <div class="col-sm-8">
-
-    <div class="page-header">
       <!-- Header -->
-      <div id="header"> 
-        <img id="logoImg" src="/assets/logo.svg"/>
-        <h1 id="logoText"> bookflip </h1> 
+      <div id="header" class="row">   
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+
+          <div class="row">
+            <div class="col-md-6 col-xs-8">
+              <img id="logoImg" src="/assets/logo.svg"/>
+              <h1 id="logoText"> bookflip </h1> 
+            </div>
+
+            <div id="accountButtons" class="col-md-6 col-xs-4" v-if="true">
+              <div class="row">
+                <div class="col-md-6 hidden-sm hidden-xs"> 
+                  <router-link to="/login" id="login" class="btn btn-default"> Log In </router-link> 
+                </div>
+                <div class="col-md-6 hidden-sm hidden-xs"> 
+                  <router-link to="/signup" id="signup" class="btn btn-default"> Sign Up </router-link> 
+                </div>
+                <div class="col-xs-12 hidden-md hidden-lg">
+                  <div class="btn-group-verticle" role="group">
+                    <router-link to="/login" class="btn btn-default"> Tiny </router-link> 
+                    <router-link to="/singup" class="btn btn-default"> Also Tiny </router-link> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+        
 
       <!-- Navigation Bar -->
-      <div id="navbar" class="text-center">
+      <div id="navbar" class="row">
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
 
-        <span id="schoolName"> WPI </span>
+          <div id="schoolName" class="col-md-9 hidden-sm hidden-xs"> Worcester Polytechnic Institute </div>
 
-        <span id="transaction" v-if="authenticated">
-        <router-link to="/buy"> Buy </router-link>
-        |
-        <router-link to="/sell"> Sell </router-link>
-        </span>
+          <div id="transaction" class="col-md-3 col-xs-12" v-if="authenticated">
+            <router-link to="/buy"> Buy </router-link>
+            |
+            <router-link to="/sell"> Sell </router-link>
+          </div>
 
-        <span id="transaction" v-else-if="!authenticated">
-        <router-link to="/buy"> Buy </router-link>
-        </span>
-
-        <span id="account">
-        <router-link to="/login"> Login </router-link>
-        |
-        <router-link to="/signup"> Signup </router-link>
-        </span>
-
+          <div id="transaction" class="col-md-3 col-xs-12" v-else-if="!authenticated">
+            <router-link to="/buy"> Buy </router-link>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Search Bar -->
-    <div v-if="true">
-        <input type="text" class="form-control" id="searchBar" placeholder="Search for a book...">
+    <!-- Search Bar & Dynamic Content -->
+    <div class="container-fluid">
+
+      <div class="row" v-if="true">
+        <div class="col-md-8 col-md-offset-2 col-sm-12">
+          <!-- Search Bar -->
+          <div>
+            <input type="text" class="form-control" id="searchBar" placeholder="Search for a book...">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Dynamicaly Loaded Content -->
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+          <router-view></router-view>
+        </div>
+
+      </div>
     </div>
-
-    <!-- Dynamicaly Loaded Content -->
-    <div>
-      <router-view></router-view>
-    </div>
-  </div>
-
-  <!-- Right Hand Sidebar -->
-  <div class="col-sm-2">
-    <p> this is home </p>
-  </div>
-
 
   </div>
 </template>
