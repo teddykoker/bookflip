@@ -1,6 +1,16 @@
 
 /* Custom CSS for things we can't do with boot strap */
 
+@font-face {
+	font-family: "Raleway";
+	src: url("../fonts/raleway/Raleway-Regular.ttf");
+}
+
+@font-face {
+	font-family: "RalewayExtraBold";
+	src: url("../fonts/raleway/Raleway-ExtraBold.ttf");
+}
+
 body {
 	background-color: #EEE;
 }
@@ -12,7 +22,7 @@ body {
 #logoText {
 	font-family: 'Raleway', sans-serif;
 	font-weight: bold;
-	font-size: 42pt;
+	font-size: 56pt;
 	font-color: #444;
 	vertical-align: bottom;
 	display: inline;

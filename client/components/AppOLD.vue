@@ -1,10 +1,10 @@
 <template>
   <!-- Main Page Container -->
-  <div class="container" id="home">
+  <div class="container" id="app">
 
   <!-- Left Hand Side Bar -->
   <div class="col-sm-2">
-    <p> this is home </p>
+    <p> filler text </p>
   </div>
 
   <!-- Main (Center) Content -->
@@ -21,6 +21,7 @@
       <span> </span>
       <span> </span>
       <span> </span>
+    
     </div>
 
     <!-- Dynamicaly Loaded Content -->
@@ -31,7 +32,7 @@
 
   <!-- Right Hand Sidebar -->
   <div class="col-sm-2">
-    <p> this is home </p>
+    <p> filler text </p>
   </div>
 
 
@@ -76,5 +77,4 @@ export default {
     this.checkAuth();
   },
 }
-
 </script>

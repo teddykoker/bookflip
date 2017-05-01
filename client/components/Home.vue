@@ -1,9 +1,7 @@
 <template>
-  
+	
 </template>
 
-
 <script>
-
 </script>
 

@@ -3,27 +3,22 @@ import VueRouter from 'vue-router'
 
 // Main Web Components
 import App from './components/App.vue'
-import Splash from './components/Splash.vue'
-
-// General UI Elements and Pages
-import Home from './components/GeneralUI/Home.vue'
+import Feed from './components/Feed.vue'
 
 // Book Buy, Sell and sub pages
-import Buy from './components/BookTransaction/Buy.vue'
-import Sell from './components/BookTransaction/Sell.vue'
+import Buy from './components/Buy.vue'
+import Sell from './components/Sell.vue'
 
 // Specific pages for user account managment and interface.
-import Login from './components/AccountManagment/Login.vue'
-import Signup from './components/AccountManagment/Signup.vue'
+import Login from './components/Login.vue'
+import Signup from './components/Signup.vue'
 
-// School Dependent Modifications
-// import WPI from './component/Schools/WorcesterPolytechnicInstitute.vue'
 
 Vue.use(VueRouter)
 
-let router = new VueRouter({
+const router = new VueRouter({
   routes: [
-    { path: '/', component: Home},
+    { path: '/', component: Feed},
     { path: '/buy', component: Buy},
     { path: '/sell', component: Sell},
     { path: '/login', component: Login},
