@@ -17,18 +17,18 @@ import Login from './components/AccountManagment/Login.vue'
 import Signup from './components/AccountManagment/Signup.vue'
 
 // School Dependent Modifications
-import WPI from './component/Schools/WorcesterPolytechnicInstitute.vue'
+// import WPI from './component/Schools/WorcesterPolytechnicInstitute.vue'
 
 Vue.use(VueRouter)
 
 let router = new VueRouter({
   routes: [
-    { path: '/', component: Splash},
+    { path: '/', component: App},
     { path: '/buy', component: Buy},
     { path: '/sell', component: Sell},
     { path: '/login', component: Login},
-    { path: '/signup', component: Signup}
-    { path : '/home', component: Home}
+    { path: '/signup', component: Signup},
+    { path: '/home', component: Home}
   ]
 })
 

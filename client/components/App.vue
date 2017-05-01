@@ -1,8 +1,30 @@
 <template>
+  <!-- Main Page Container -->
+  <div class="container" id="app">
 
-    <router-link v-show="!authenticated" to="/"> <a> Random Text </a> </router-link>
+  <!-- Left Hand Side Bar -->
+  <div class="col-sm-2">
+  <p> filler text </p>
+  </div>
+
+  <!-- Main (Center) Content -->
+  <div class="col-sm-8">
+
+    <!-- Header -->
+    <div class="page-header" id="header"> 
+      <img id="logoImg" src="/assets/logo.svg"/>
+      <h1 id="logoText">bookflip</h1> 
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="page-header" id="navbar">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+    
+    </div>
+
     <!-- REPLACE -->
-
     <div>
       <router-link v-show="!authenticated" to="/login" > <a>Login</a> </router-link>
       <router-link v-show="!authenticated" to="/signup" > <a>Signup</a> </router-link>
@@ -40,9 +62,6 @@
 
 import axios from 'axios'
 
-
-
-
 export default {
   name: 'app',
   data: function () {
@@ -77,4 +96,3 @@ export default {
   },
 }
 </script>
-
