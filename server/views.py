@@ -14,18 +14,12 @@ from models.listing import Listing
 
 @app.route('/api/all')
 def all_listings():
-    listings = query_db('SELECT * FROM listings')
-
-    for listing in listings:
-        listing['book'] = query_db('SELECT * FROM books WHERE id = ?',
-                           (listing['book_id'],), one=True)
-
-    return jsonify(listings)
+    return jsonify([listing.serialized() for listing in Listing.all()])
 
 
 @app.route('/api/users')
 def all_users():
-    return jsonify(User.all_users())
+    return jsonify(User.all())
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -35,19 +29,17 @@ def signup():
             'username' not in request.json):
         abort(400)
 
-    user = User(request.json['username'], request.json['email'],
-                User.hash_password(request.json['password']))
-
-    if not user.unique_email():
+    if User.with_email(request.json['email']) is not None:
         # report user with email already exists
         return jsonify({'status': 'failed'})
 
-    if not user.unique_username():
+    if User.with_username(request.json['username'] is not None):
         # report user with username already exists
         return jsonify({'status': 'failed'})
 
     # save user to database
-    user.save()
+    User.add(request.json['username'], request.json['email'],
+             User.hash_password(request.json['password']))
 
     # registration was successful
     return jsonify({'status': 'success'})
@@ -85,20 +77,15 @@ def new_listing():
     print request.json['listing']['book']
     book = Book.with_isbn(request.json['listing']['book']['isbn'])
     if book is None:
-        book = Book(request.json['listing']['book']['isbn'],
+        Book.add(request.json['listing']['book']['isbn'],
                     request.json['listing']['book']['title'])
-        book.save()
+        book = Book.with_isbn(request.json['listing']['book']['isbn'])
 
-    print book.id
-
-    listing = Listing(book.id, request.json['listing']['price'])
-    listing.save()
+    Listing.add(book, request.json['listing']['price'])
 
     return jsonify({'status': 'success'})
 
 
-
-@app.route('/api/me')
 def me():
     if 'user_id' in session:
         return jsonify({'status': 'success'},
