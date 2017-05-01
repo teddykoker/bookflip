@@ -1,31 +1,22 @@
+from sqlalchemy import Column, Integer, String, Text, exists
+from ..database import Base, db_session
+
 import bcrypt
-from ..db import query_db
+
+class User(Base):
+
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(32), unique=True)
+    email = Column(String(128), unique=True)
+    password = Column(Text)
 
 
-class User(object):
-    def __init__(self, id):
-        self._id = id
-
-    @property
-    def id(self):
-        return self._id
-
-    @property
-    def username(self):
-        return query_db('SELECT username FROM users WHERE id = ?',
-                        (self._id,), one=True)['username']
-
-
-    @property
-    def email(self):
-        return query_db('SELECT email FROM users WHERE id = ?',
-                        (self._id,), one=True)['email']
-
-
-    @property
-    def password(self):
-        return query_db('SELECT password FROM users WHERE id = ?',
-                        (self._id,), one=True)['password']
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = bcrypt.hashpw(password.encode('utf-8'),
+                                      bcrypt.gensalt())
 
 
     def check_password(self, password):
@@ -33,38 +24,14 @@ class User(object):
                               self.password.encode('utf-8'))
 
 
-    @staticmethod
-    def all():
-        users = query_db('SELECT id FROM users')
-        for user in users:
-            yield User(user['id'])
-
+    def __repr__(self):
+        return '<User %r>' % (self.name)
 
     @staticmethod
-    def add(username, email, password):
-        query_db('INSERT INTO users (username,email,password) VALUES (?,?,?)',
-                 (username, email, password))
+    def username_taken(username):
+        return db_session.query(exists().where(User.username == username)).scalar()
 
 
     @staticmethod
-    def with_username(username):
-        user = query_db('SELECT id FROM users WHERE username = ?',
-                      (username,), one=True)
-        if user is not None:
-            return User(user['id'])
-        return None
-
-
-    @staticmethod
-    def with_email(email):
-        id = query_db('SELECT id FROM users WHERE email = ?',
-                      (email,), one=True)
-        if id is not None:
-            return User(id)
-        return None
-
-
-    @staticmethod
-    def hash_password(password):
-        return bcrypt.hashpw(password.encode('utf-8'),
-                             bcrypt.gensalt())
+    def email_taken(email):
+        return db_session.query(exists().where(User.email == email)).scalar()
