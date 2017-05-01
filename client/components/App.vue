@@ -1,29 +1,36 @@
 <template>
-  <div class="container" id="app">
 
+    <router-link v-show="!authenticated" to="/"> <a> Random Text </a> </router-link>
+    <!-- REPLACE -->
 
-
-    <div class="page-header"> 
-      <img class="logoImg" src="/assets/logo.svg"/> 
-      <h1 class="logoText">bookflip</h1> 
-    </div>
-    <div class="page-header">
+    <div>
       <router-link v-show="!authenticated" to="/login" > <a>Login</a> </router-link>
       <router-link v-show="!authenticated" to="/signup" > <a>Signup</a> </router-link>
 
       <a v-show="authenticated" v-on:click="logout" href="#">Logout</a>
     </div>
+
+    
     <div>
       <ul class="nav nav-tabs">
         <router-link tag="li" to="/buy" active-class="active"> <a>Buy</a> </router-link>
         <router-link tag="li" to="/sell" active-class="active"> <a>Sell</a> </router-link>
       </ul>
     </div>
+    <!-- end REPLACE -->
+
+
+    <!-- Dynamicaly Loaded Content -->
     <div>
       <br>
-
       <router-view></router-view>
     </div>
+
+  </div>
+
+  <!-- Right Hand Side Bar -->
+  <div class="col-sm-2">
+  </div>
 
   </div>
 </template>
@@ -32,6 +39,9 @@
 <script>
 
 import axios from 'axios'
+
+
+
 
 export default {
   name: 'app',
