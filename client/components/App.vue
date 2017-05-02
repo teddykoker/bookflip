@@ -11,22 +11,25 @@
 
           <div class="row">
             <div class="col-md-6 col-xs-8">
-              <img id="logoImg" src="/assets/logo.svg"/>
-              <h1 id="logoText"> bookflip </h1> 
+              <img id="logoImg" class="hidden-sm hidden-xs" src="/assets/logo.svg"/>
+              <h1 id="logoText" class="hidden-sm hidden-xs"> bookflip </h1> 
+
+              <img id="logoImgSmall" class="hidden-md hidden-lg" sr="/assets/logo.svg"/>
+              <h1 id="logoTextSmall" class="hidden-md hidden-lg"> bookflip </h1>
             </div>
 
-            <div id="accountButtons" class="col-md-6 col-xs-4" v-if="true">
+            <div class="col-md-6 col-xs-4" v-if="true">
               <div class="row">
-                <div class="col-md-6 hidden-sm hidden-xs"> 
-                  <router-link to="/login" id="login" class="btn btn-default"> Log In </router-link> 
+                <div class="col-lg-12 hidden-sm hidden-xs hidden-md"> 
+                  <div class="btn-group accountBtn" role="group">
+                    <router-link to="/login" class="btn btn-default"> Log In </router-link>
+                    <router-link to="/signup" class="btn btn-default"> Sign Up </router-link>
+                  </div>
                 </div>
-                <div class="col-md-6 hidden-sm hidden-xs"> 
-                  <router-link to="/signup" id="signup" class="btn btn-default"> Sign Up </router-link> 
-                </div>
-                <div class="col-xs-12 hidden-md hidden-lg">
-                  <div class="btn-group-verticle" role="group">
-                    <router-link to="/login" class="btn btn-default"> Tiny </router-link> 
-                    <router-link to="/singup" class="btn btn-default"> Also Tiny </router-link> 
+                <div class="col-xs-12 hidden-lg">
+                  <div class="btn-group-vertical accountBtn" role="group">
+                    <router-link to="/login" class="btn btn-default"> Log In </router-link> 
+                    <router-link to="/signup" class="btn btn-default"> Sign Up </router-link> 
                   </div>
                 </div>
               </div>
@@ -42,39 +45,31 @@
         <div class="col-md-8 col-md-offset-2 col-xs-12">
 
           <div id="schoolName" class="col-md-9 hidden-sm hidden-xs"> Worcester Polytechnic Institute </div>
+          <div id="schoolName" class="col-xs-4 hidden-md hidden-lg"> WPI </div>
 
-          <div id="transaction" class="col-md-3 col-xs-12" v-if="authenticated">
+          <div id="transaction" class="col-md-3 col-xs-8" v-if="authenticated">
             <router-link to="/buy"> Buy </router-link>
             |
             <router-link to="/sell"> Sell </router-link>
           </div>
 
-          <div id="transaction" class="col-md-3 col-xs-12" v-else-if="!authenticated">
+          <div id="transaction" class="col-md-3 col-xs-8" v-else-if="!authenticated">
             <router-link to="/buy"> Buy </router-link>
+            |
+            <router-link to="/sell"> Sell </router-link>
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- Search Bar & Dynamic Content -->
+    <!-- Dynamic Content -->
     <div class="container-fluid">
-
-      <div class="row" v-if="true">
-        <div class="col-md-8 col-md-offset-2 col-sm-12">
-          <!-- Search Bar -->
-          <div>
-            <input type="text" class="form-control" id="searchBar" placeholder="Search for a book...">
-          </div>
-        </div>
-      </div>
-
       <div class="row">
-
         <!-- Dynamicaly Loaded Content -->
         <div class="col-md-8 col-md-offset-2 col-xs-12">
           <router-view></router-view>
         </div>
-
       </div>
     </div>
 

@@ -30,20 +30,31 @@ body {
 	border-bottom: 1px solid #CCC;
 }
 
-#logoText {
+#logoText, #logoTextSmall {
 	font-size: 56pt;
 	vertical-align: bottom;
 	display: inline;
 	padding-left: .25em;
 }
+#logoTextSmall {
+	font-size: 40pt;
+}
 
-#logoImg {
+#logoImg, #logoImgSmall {
 	margin-left: 0px;
+	min-height: 180px;
+}
+#logoImgSmall {
+	min-height: 90px;
 }
 
 .btn {
-	width: 200px;
+	min-width: 180px;
 	font-size: 20pt;
+}
+
+.accountBtn {
+	float: right;
 }
 
 #navbar {
@@ -72,6 +83,7 @@ body {
 
 	margin: auto;
 	margin-bottom: 16px;
+	margin-top: 12px;
 
 	border-top: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;

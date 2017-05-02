@@ -1,5 +1,11 @@
 <template>
   <div id='buy'>
+  
+      <!-- Search Bar -->
+      <div>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search for a book...">
+      </div>
+
       <div v-for="(listing, index) in listings">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -10,7 +16,8 @@
           </div>
         </div>
       </div>
-    </div>
+
+  </div>
 </template>
 
 <script>

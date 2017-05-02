@@ -18,7 +18,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Feed},
+    { path: '/', component: Buy},
     { path: '/buy', component: Buy},
     { path: '/sell', component: Sell},
     { path: '/login', component: Login},
