@@ -40,7 +40,7 @@ def signup():
     user = User(request.json['username'], request.json['email'],
                 request.json['password'])
 
-    db_session.add(user);
+    db_session.add(user)
     db_session.commit()
 
     # registration was successful
@@ -77,7 +77,9 @@ def logout():
 @app.route('/api/new-listing', methods=['POST'])
 def new_listing():
 
-    book = Book.query.filter(Book.isbn == request.json['listing']['book']['isbn']).first()
+    book = Book.query.filter(
+        Book.isbn == request.json['listing']['book']['isbn']).first()
+
     if book is None:
         book = Book(request.json['listing']['book']['isbn'],
                     request.json['listing']['book']['title'])

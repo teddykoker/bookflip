@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from ..database import Base
 
+
 class Listing(Base):
     __tablename__ = 'listings'
     id = Column(Integer, primary_key=True)
@@ -14,7 +15,6 @@ class Listing(Base):
 
     def __repr__(self):
         return '<Listing>'
-
 
     def serialized(self):
         return {'book': self.book.serialized(), 'price': self.price}
