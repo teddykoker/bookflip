@@ -1,56 +1,21 @@
-import bcrypt
-from ..db import query_db
-
-class Book(object):
-    def __init__(self, id):
-        self._id = id
+from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy.orm import relationship
+from ..database import Base
 
 
-    @property
-    def id(self):
-        return self._id
+class Book(Base):
+    __tablename__ = 'books'
+    id = Column(Integer, primary_key=True)
+    isbn = Column(String(13), unique=True)
+    title = Column(String(128))
+    listings = relationship("Listing", back_populates="book")
 
+    def __init__(self, isbn, title):
+        self.isbn = isbn
+        self.title = title
 
-    @property
-    def isbn(self):
-        return query_db('SELECT isbn FROM books WHERE id = ?',
-                        (self.id,), one=True)['isbn']
-
-    @property
-    def title(self):
-        return query_db('SELECT title FROM books WHERE id = ?',
-                        (self.id,), one=True)['title']
-
+    def __repr__(self):
+        return '<Book %r>' % (self.title)
 
     def serialized(self):
         return {'title': self.title, 'isbn': self.isbn}
-
-
-    @staticmethod
-    def add(isbn, title):
-        query_db('INSERT INTO books (isbn,title) VALUES (?,?)',
-                 (isbn, title))
-
-    @staticmethod
-    def all():
-        books = query_db('SELECT id FROM listings')
-        for book in books:
-            yield Book(book['id'])
-
-
-    @staticmethod
-    def with_isbn(isbn):
-        book = query_db('SELECT id FROM books WHERE isbn = ?',
-                      (isbn,), one=True)
-        if book is not None:
-            return Book(book['id'])
-        return None
-
-
-    @staticmethod
-    def with_title(title):
-        book = query_db('SELECT id FROM books WHERE title = ?',
-                      (user,), one=True)
-        if book is not None:
-            return Book(book['id'])
-        return None
