@@ -1,32 +1,90 @@
 
 /* Custom CSS for things we can't do with boot strap */
 
+@font-face {
+	font-family: "Raleway";
+	src: url("../fonts/raleway/Raleway-Regular.ttf");
+}
+
+@font-face {
+	font-family: "RalewayExtraBold";
+	src: url("../fonts/raleway/Raleway-ExtraBold.ttf");
+}
+
 body {
-	background-color: #EEE;
+	background-color: #FFF;
+}
+
+#app {
+	min-width: 100%;
 }
 
 #header {
-	height: 12em;
+	font-family: 'Raleway', sans-serif;
+	font-color: #444;
+	min-width: 100%;
+
+	background-color: #EEE;
+	padding-bottom: 9px;
+	padding-top: 40px;
+	border-bottom: 1px solid #CCC;
 }
 
-#logoText {
-	font-family: 'Raleway', sans-serif;
-	font-weight: bold;
-	font-size: 42pt;
-	font-color: #444;
+#logoText, #logoTextSmall {
+	font-size: 56pt;
 	vertical-align: bottom;
 	display: inline;
 	padding-left: .25em;
 }
+#logoTextSmall {
+	font-size: 40pt;
+}
 
-#logoImg {
-	height: 100%;
+#logoImg, #logoImgSmall {
+	margin-left: 0px;
+	min-height: 180px;
+}
+#logoImgSmall {
+	min-height: 90px;
+}
+
+.btn {
+	min-width: 180px;
+	font-size: 20pt;
+}
+
+.accountBtn {
+	float: right;
 }
 
 #navbar {
-	height: 2.25em;
+	height: 60px;
+	padding-bottom: 9px;
+	border-bottom: 1px solid #CCC;
 }
 
-.page-header{
+#transaction, #account, #schoolName {
+	font-family: 'Raleway', sans-serif;
+	font-size: 24pt;
+	font-color: #000;
+	padding: 5px 0px;
+}
+
+#transaction {
+	text-align: right;
+}
+
+#searchBar {
+	height: 40px;
+	background-color: #EEE;
+
+	display: block;
+	font-size: 16pt;
+
+	margin: auto;
+	margin-bottom: 16px;
+	margin-top: 12px;
+
+	border-top: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
 }

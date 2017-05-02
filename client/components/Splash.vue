@@ -4,7 +4,7 @@
 
 <template>
 
-<div class="container">
+<div class="container" id="splash">
 	<div class="jumbotron">
 		<h1> Search for your school below </h1>
 		<p> filler text </p>

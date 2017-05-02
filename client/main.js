@@ -2,17 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import App from './components/App.vue'
+
+// Book Buy, Sell and sub pages
 import Buy from './components/Buy.vue'
-import Login from './components/Login.vue'
 import Sell from './components/Sell.vue'
+
+// Specific pages for user account managment and interface.
+import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
-import Home from './components/Home.vue'
 
 Vue.use(VueRouter)
 
-let router = new VueRouter({
+const router = new VueRouter({
   routes: [
-    { path: '/', component: Home},
+    { path: '/', component: Buy},
     { path: '/buy', component: Buy},
     { path: '/sell', component: Sell},
     { path: '/login', component: Login},
