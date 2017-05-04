@@ -98,10 +98,8 @@ def new_listing():
 @app.route('/api/me')
 def me():
     if 'user_id' in session:
-        return jsonify({'status': 'success'},
-                       {'data': {'authenticated': True}})
-    return jsonify({'status': 'success'},
-                   {'data': {'authenticated': False}})
+        return jsonify({'status': 'success', 'data': {'authenticated': True}})
+    return jsonify({'status': 'success', 'data': {'authenticated': False}})
 
 
 @app.route('/', defaults={'path': ''})

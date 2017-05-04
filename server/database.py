@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from . import app
 
-engine = create_engine('sqlite:///' + app.config['DATABASE_URI'], echo=True)
+engine = create_engine('sqlite:///' + app.config['DATABASE_URI'])
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))

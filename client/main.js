@@ -3,13 +3,12 @@ import VueRouter from 'vue-router'
 
 import App from './components/App.vue'
 
-// Book Buy, Sell and sub pages
 import Buy from './components/Buy.vue'
 import Sell from './components/Sell.vue'
-
-// Specific pages for user account managment and interface.
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
+
+import Auth from './auth.js'
 
 Vue.use(VueRouter)
 
@@ -17,10 +16,18 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Buy},
     { path: '/buy', component: Buy},
-    { path: '/sell', component: Sell},
+    { path: '/sell', component: Sell, meta: {auth: true}},
     { path: '/login', component: Login},
     { path: '/signup', component: Signup}
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.meta.auth && !Auth.user.authenticated){
+    next({path: '/login'})
+  } else {
+    next()
+  }
 })
 
 new Vue({ // eslint-disable-line no-new
