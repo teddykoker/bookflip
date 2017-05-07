@@ -5,6 +5,7 @@ from flask import request, jsonify, session, abort
 
 from server import app
 from database import db_session
+from helpers import api_response
 
 from models.user import User
 from models.book import Book
@@ -13,12 +14,14 @@ from models.listing import Listing
 
 @app.route('/api/all')
 def all_listings():
-    return jsonify([listing.serialized() for listing in Listing.query.all()])
+
+    listings = [listing.serialized() for listing in Listing.query.all()]
+    return api_response('success', {'listings': listings})
 
 
 @app.route('/api/users')
 def all_users():
-    return jsonify({})
+    return api_response('success', {})
 
 
 @app.route('/api/signup', methods=['POST'])
@@ -30,11 +33,11 @@ def signup():
 
     if User.email_taken(request.json['email']):
         # report user with email already exists
-        return jsonify({'status': 'failed'})
+        return api_response('failed')
 
     if User.username_taken(request.json['username']):
         # report user with username already exists
-        return jsonify({'status': 'failed'})
+        return api_response('failed')
 
     # save user to database
     user = User(request.json['username'], request.json['email'],
@@ -44,7 +47,7 @@ def signup():
     db_session.commit()
 
     # registration was successful
-    return jsonify({'status': 'success'})
+    return api_response('success')
 
 
 @app.route('/api/login', methods=['POST'])
@@ -57,15 +60,15 @@ def login():
 
     if user is None:
         # report wrong username
-        return jsonify({'status': 'failed'})
+        return api_response('failed')
 
     if user.check_password(request.json['password']):
         # login successful
         session["user_id"] = user.id
-        return jsonify({'status': 'success'})
+        return api_response('success')
 
     # report wrong password
-    return jsonify({'status': 'failed'})
+    return api_response('failed')
 
 
 @app.route('/api/logout')
@@ -92,14 +95,14 @@ def new_listing():
     db_session.add(new_listing)
     db_session.commit()
 
-    return jsonify({'status': 'success'})
+    return api_response('success')
 
 
 @app.route('/api/me')
 def me():
     if 'user_id' in session:
-        return jsonify({'status': 'success', 'data': {'authenticated': True}})
-    return jsonify({'status': 'success', 'data': {'authenticated': False}})
+        return api_response('success', {'authenticated': True})
+    return api_response('success', {'authenticated': False})
 
 
 @app.route('/', defaults={'path': ''})
