@@ -23,11 +23,19 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.meta.auth && !Auth.user.authenticated){
-    next({path: '/login'})
-  } else {
+  Auth.checkAuth()
+  .then(function() {
+
+    if(to.meta.auth && !Auth.user.authenticated){
+      next({path: '/login'})
+    } else {
+      next()
+    }
+  })
+  .catch(error => {
+    console.log(error)
     next()
-  }
+  })
 })
 
 new Vue({ // eslint-disable-line no-new

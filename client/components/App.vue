@@ -92,7 +92,7 @@ export default {
     }
   },
   methods: {
-    checkAuth: function(){
+    /*checkAuth: function(){
       var self = this;
       axios.get('/api/me').then(function(response) {
         console.log(response)
@@ -106,9 +106,11 @@ export default {
       }).catch(function(error) {
         console.log(error);
       });
-    },
+    },*/
     logout: function(){
       var self = this;
+      console.log(self)
+      self.$router.push('/login')
       axios.get('/api/logout').then(function(response) {
         if(response.data.status == "success"){
           Auth.user.authenticated = false;
@@ -117,10 +119,8 @@ export default {
         console.log(error);
       });
     }
-  },
-  beforeMount: function(){
-    this.checkAuth();
-  },
+  }
+
 }
 
 </script>
