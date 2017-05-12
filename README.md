@@ -46,6 +46,11 @@ pip install -r requirements.txt
 npm install
 ```
 
+Create instance folder and config file:
+```bash
+mkdir instance && touch instance/config.py
+```
+
 Initialize database:
 ```bash
 python

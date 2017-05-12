@@ -6,6 +6,7 @@ from flask import request, jsonify, session, abort
 from server import app
 from database import db_session
 from helpers import api_response
+import mail
 
 from models.user import User
 from models.book import Book
@@ -103,6 +104,16 @@ def me():
     if 'user_id' in session:
         return api_response('success', {'authenticated': True})
     return api_response('success', {'authenticated': False})
+
+
+# @app.route('/api/test-mail')
+# def test_mail():
+#     msg = mail.Message(subject='test subject',
+#                        recipients=['recipient@example.com'],
+#                        body='body content')
+
+#     mail.send(msg)
+#     return 'sent message'
 
 
 @app.route('/', defaults={'path': ''})
