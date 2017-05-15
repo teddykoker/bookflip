@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
 
   user: {
-    authenticated: false,
+    authenticated: false
   },
 
   checkAuth: function(){
@@ -20,6 +20,6 @@ export default {
         reject(error);
       });
     });
-  },
+  }
 }
 

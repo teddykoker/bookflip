@@ -32,9 +32,9 @@ def connect_server():
 
 def send(message):
     if debug:
-        print '---------- MESSAGE FOLLOWS ----------'
-        print message.as_string()
-        print '------------ END MESSAGE ------------'
+        print('---------- MESSAGE FOLLOWS ----------')
+        print(message.as_string())
+        print('------------ END MESSAGE ------------')
     else:
         server = connect_server()
         server.sendmail(message.sender,

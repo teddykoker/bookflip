@@ -27,14 +27,13 @@ router.beforeEach((to, from, next) => {
   .then(function() {
 
     if(to.meta.auth && !Auth.user.authenticated){
-      next({path: '/login'})
-    } else {
-      next()
+      return next({path: '/login'})
     }
+    return next()
   })
   .catch(error => {
     console.log(error)
-    next()
+    return next()
   })
 })
 
