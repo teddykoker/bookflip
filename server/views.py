@@ -1,7 +1,8 @@
 import sqlite3
 import bcrypt
 
-from flask import request, jsonify, session, abort
+from flask import request, jsonify, session, abort, url_for
+from itsdangerous import URLSafeSerializer, BadSignature
 
 from server import app
 from database import db_session
@@ -46,6 +47,8 @@ def signup():
 
     db_session.add(user)
     db_session.commit()
+
+    print("click this link: " + get_activation_link(user) + " to activate")
 
     # registration was successful
     return api_response('success')
@@ -114,6 +117,32 @@ def me():
 
 #     mail.send(msg)
 #     return 'sent message'
+
+def get_serializer(secret_key=None):
+    if secret_key is None:
+        secret_key = app.secret_key
+    return URLSafeSerializer(secret_key)
+
+def get_activation_link(user):
+    s = get_serializer()
+    payload = s.dumps(user.id)
+    return url_for('activate_user', payload=payload, _external=True)
+
+@app.route('/api/activate/<payload>')
+def activate_user(payload):
+    s = get_serializer()
+    try:
+        user_id = s.loads(payload)
+    except BadSignature:
+        abort(400)
+
+    user = User.query.filter(User.id == user_id).first()
+    if user is not None:
+        user.activate()
+    else:
+        abort(400)
+
+    return "user activated"
 
 
 @app.route('/', defaults={'path': ''})
