@@ -6,7 +6,7 @@ from itsdangerous import URLSafeSerializer, BadSignature
 
 from server import app
 from database import db_session
-from helpers import api_response
+from utils import api_response
 import mail
 
 from models.user import User
@@ -123,10 +123,12 @@ def get_serializer(secret_key=None):
         secret_key = app.secret_key
     return URLSafeSerializer(secret_key)
 
+
 def get_activation_link(user):
     s = get_serializer()
     payload = s.dumps(user.id)
     return url_for('activate_user', payload=payload, _external=True)
+
 
 @app.route('/api/activate/<payload>')
 def activate_user(payload):

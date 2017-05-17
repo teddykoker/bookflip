@@ -41,8 +41,11 @@ def send(message):
                         message.recipients,
                         message.as_string())
 
+        server.close()
+
 
 class Message(object):
+
     def __init__(self, subject='', recipients=[], body=None):
 
         self.recipients = recipients
