@@ -2,15 +2,24 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from . import app
 
-engine = create_engine('sqlite:///' + app.config['DATABASE_URI'])
-db_session = scoped_session(sessionmaker(autocommit=False,
+class Database(object):
+
+    def __init__(self, app=None):
+        if app is not None:
+            init_app(app)
+
+    def init_app(self, app):
+        self.engine = create_engine('sqlite:///' + app.config['DATABASE_URI'])
+        self.session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
-                                         bind=engine))
+                                         bind=self.engine))
 
-Base = declarative_base()
-Base.query = db_session.query_property()
+        self.Base = declarative_base()
+        self.Base.query = self.session.query_property()
+
+
+db = Database()
 
 
 def init_db():
@@ -19,9 +28,9 @@ def init_db():
     # you will have to import them first before calling init_db()
     from models import book, listing, user
 
-    Base.metadata.create_all(bind=engine)
+    db.Base.metadata.create_all(bind=engine)
 
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
+
+
+

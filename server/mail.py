@@ -2,46 +2,52 @@
 import smtplib
 from email.mime.text import MIMEText
 
-from . import app
 
-host = app.config.get('MAIL_HOST', 'localhost')
-username = app.config.get('MAIL_USERNAME')
-password = app.config.get('MAIL_PASSWORD')
-port = app.config.get('MAIL_PORT')
-tls = app.config.get('MAIL_TLS', False)
-ssl = app.config.get('MAIL_SSL', False)
-debug = app.config.get('MAIL_DEBUG', False)
-sender = app.config.get('MAIL_SENDER')
+class Mail(object):
 
+    def __init__(self, app=None):
+        if app is not None:
+            init_app(app)
 
-def connect_server():
-    server = None
-    if sll:
-        server = smtplib.SMTP_SSL(host, port)
-    else:
-        server = smtplib.SMTP(host, port)
+    def init_app(self, app):
+        self.host = app.config.get('MAIL_HOST', 'localhost')
+        self.username = app.config.get('MAIL_USERNAME')
+        self.password = app.config.get('MAIL_PASSWORD')
+        self.port = app.config.get('MAIL_PORT')
+        self.tls = app.config.get('MAIL_TLS', False)
+        self.ssl = app.config.get('MAIL_SSL', False)
+        self.debug = app.config.get('MAIL_DEBUG', False)
+        self.sender = app.config.get('MAIL_SENDER')
 
-    if tls:
-        server.starttls()
+    def connect_server():
+        server = None
+        if self.sll:
+            server = smtplib.SMTP_SSL(self.host, self.port)
+        else:
+            server = smtplib.SMTP(self.host, self.port)
 
-    if username and password:
-        server.login(username, password)
+        if self.tls:
+            server.starttls()
 
-    return server
+        if self.username and self.password:
+            server.login(self.username, self.password)
 
+        return server
 
-def send(message):
-    if debug:
-        print('---------- MESSAGE FOLLOWS ----------')
-        print(message.as_string())
-        print('------------ END MESSAGE ------------')
-    else:
-        server = connect_server()
-        server.sendmail(message.sender,
+    def send(message):
+        if self.debug:
+            print('---------- MESSAGE FOLLOWS ----------')
+            print(message.as_string())
+            print('------------ END MESSAGE ------------')
+        else:
+            server = connect_server()
+            server.sendmail(message.sender,
                         message.recipients,
                         message.as_string())
 
-        server.close()
+            server.close()
+
+mail = Mail()
 
 
 class Message(object):

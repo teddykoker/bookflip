@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship
-from ..database import Base
+from ..database import db
 
 
-class Book(Base):
+class Book(db.Base):
     __tablename__ = 'books'
     id = Column(Integer, primary_key=True)
     isbn = Column(String(13), unique=True)

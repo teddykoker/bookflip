@@ -53,10 +53,7 @@ mkdir instance && touch instance/config.py
 
 Initialize database:
 ```bash
-python
->>> from server import db
->>> db.init_db()
->>> quit()
+python init_db.py
 ```
 
 Build and start the server:

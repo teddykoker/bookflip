@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, String, Text, Boolean, exists
-from ..database import Base, db_session
+from ..database import db
 
 import bcrypt
 
 
-class User(Base):
+class User(db.Base):
 
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -25,16 +25,16 @@ class User(Base):
                               self.password.encode('utf-8'))
 
     def __repr__(self):
-        return '<User %r>' % (self.name)
+        return '<User %r>' % (self.username)
 
     def activate(self):
         self.active = True
-        db_session.commit()
+        db.session.commit()
 
     @staticmethod
     def username_taken(username):
-        return db_session.query(exists().where(User.username == username)).scalar()
+        return db.session.query(exists().where(User.username == username)).scalar()
 
     @staticmethod
     def email_taken(email):
-        return db_session.query(exists().where(User.email == email)).scalar()
+        return db.session.query(exists().where(User.email == email)).scalar()

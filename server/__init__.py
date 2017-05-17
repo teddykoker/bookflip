@@ -1,12 +1,30 @@
 from flask import Flask
+from database import db
+from mail import mail
 
-app = Flask(__name__, instance_relative_config=True, static_url_path="")
+def create_app(config_module=None):
+    app = Flask(__name__, static_url_path="")
 
-# Load config from config.py
-app.config.from_object('config')
+    app.config.from_object(config_module or 'config')
 
-# Load config from instance folder
-app.config.from_pyfile('config.py')
+    db.init_app(app)
+    mail.init_app(app)
 
-import server.database
-import server.views
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db.session.remove()
+
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def catch_all(path):
+        """
+        Catch all that redirects to index.html for the single page application
+        """
+        return app.send_static_file('index.html')
+
+
+    from api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api')
+
+
+    return app

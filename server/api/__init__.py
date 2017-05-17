@@ -1,32 +1,35 @@
 import sqlite3
 import bcrypt
 
-from flask import request, jsonify, session, abort, url_for
+from flask import Blueprint, request, jsonify, session, abort, url_for, current_app
 from itsdangerous import URLSafeSerializer, BadSignature
 
-from server import app
-from database import db_session
-from utils import api_response
-import mail
+from ..database import db
 
-from models.user import User
-from models.book import Book
-from models.listing import Listing
+from ..utils import api_response
+
+from ..mail import mail, Message
+
+from ..models.user import User
+from ..models.book import Book
+from ..models.listing import Listing
+
+api = Blueprint('api', __name__)
 
 
-@app.route('/api/all')
+@api.route('/all')
 def all_listings():
 
     listings = [listing.serialized() for listing in Listing.query.all()]
     return api_response('success', {'listings': listings})
 
 
-@app.route('/api/users')
+@api.route('/users')
 def all_users():
     return api_response('success', {})
 
 
-@app.route('/api/signup', methods=['POST'])
+@api.route('/signup', methods=['POST'])
 def signup():
     if (not request.json or 'email' not in request.json or
             'password' not in request.json or
@@ -35,18 +38,18 @@ def signup():
 
     if User.email_taken(request.json['email']):
         # report user with email already exists
-        return api_response('failed')
+        return api_response('failed', 'email exists')
 
     if User.username_taken(request.json['username']):
         # report user with username already exists
-        return api_response('failed')
+        return api_response('failed', 'username exists')
 
     # save user to database
     user = User(request.json['username'], request.json['email'],
                 request.json['password'])
 
-    db_session.add(user)
-    db_session.commit()
+    db.session.add(user)
+    db.session.commit()
 
     print("click this link: " + get_activation_link(user) + " to activate")
 
@@ -54,7 +57,7 @@ def signup():
     return api_response('success')
 
 
-@app.route('/api/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login():
     if (not request.json or 'username' not in request.json or
             'password' not in request.json):
@@ -75,13 +78,13 @@ def login():
     return api_response('failed')
 
 
-@app.route('/api/logout')
+@api.route('/logout')
 def logout():
     session.pop('user_id', None)
     return jsonify({'status': 'success'})
 
 
-@app.route('/api/new-listing', methods=['POST'])
+@api.route('/new-listing', methods=['POST'])
 def new_listing():
 
     book = Book.query.filter(
@@ -90,28 +93,28 @@ def new_listing():
     if book is None:
         book = Book(request.json['listing']['book']['isbn'],
                     request.json['listing']['book']['title'])
-        db_session.add(book)
-        db_session.commit()
+        db.session.add(book)
+        db.session.commit()
 
     new_listing = Listing(request.json['listing']['price'])
     new_listing.book = book
 
-    db_session.add(new_listing)
-    db_session.commit()
+    db.session.add(new_listing)
+    db.session.commit()
 
     return api_response('success')
 
 
-@app.route('/api/me')
+@api.route('/me')
 def me():
     if 'user_id' in session:
         return api_response('success', {'authenticated': True})
     return api_response('success', {'authenticated': False})
 
 
-# @app.route('/api/test-mail')
+# @api.route('/test-mail')
 # def test_mail():
-#     msg = mail.Message(subject='test subject',
+#     msg = Message(subject='test subject',
 #                        recipients=['recipient@example.com'],
 #                        body='body content')
 
@@ -120,7 +123,7 @@ def me():
 
 def get_serializer(secret_key=None):
     if secret_key is None:
-        secret_key = app.secret_key
+        secret_key = current_app.secret_key
     return URLSafeSerializer(secret_key)
 
 
@@ -130,7 +133,7 @@ def get_activation_link(user):
     return url_for('activate_user', payload=payload, _external=True)
 
 
-@app.route('/api/activate/<payload>')
+@api.route('/activate/<payload>')
 def activate_user(payload):
     s = get_serializer()
     try:
@@ -147,10 +150,7 @@ def activate_user(payload):
     return "user activated"
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    """
-    Catch all that redirects to index.html for the single page application
-    """
-    return app.send_static_file('index.html')
+
+
+
+#from . import users, listings, books
