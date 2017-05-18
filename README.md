@@ -68,8 +68,8 @@ python run.py
 All responses will look like the following:
 ```json
 {
-    status: 'success', // 'error' or 'fail'
-    data: {...}
+    "status": "success", // 'error' or 'fail'
+    "data": {...}
 }
 ```
 
