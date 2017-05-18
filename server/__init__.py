@@ -1,5 +1,5 @@
 from flask import Flask
-from database import db
+from models import db
 from mail import mail
 
 def create_app(config_module=None):
@@ -9,10 +9,6 @@ def create_app(config_module=None):
 
     db.init_app(app)
     mail.init_app(app)
-
-    @app.teardown_appcontext
-    def shutdown_session(exception=None):
-        db.session.remove()
 
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
@@ -25,6 +21,5 @@ def create_app(config_module=None):
 
     from api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
-
 
     return app

@@ -4,15 +4,11 @@ import bcrypt
 from flask import Blueprint, request, jsonify, session, abort, url_for, current_app
 from itsdangerous import URLSafeSerializer, BadSignature
 
-from ..database import db
-
 from ..utils import api_response
 
 from ..mail import mail, Message
 
-from ..models.user import User
-from ..models.book import Book
-from ..models.listing import Listing
+from ..models import db, User, Listing, Book
 
 api = Blueprint('api', __name__)
 
@@ -130,7 +126,7 @@ def get_serializer(secret_key=None):
 def get_activation_link(user):
     s = get_serializer()
     payload = s.dumps(user.id)
-    return url_for('activate_user', payload=payload, _external=True)
+    return url_for('api.activate_user', payload=payload, _external=True)
 
 
 @api.route('/activate/<payload>')
