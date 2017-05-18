@@ -4,12 +4,16 @@ import unittest
 import tempfile
 import json
 
+from server.models import db, User
+
 class TestConfig(object):
     DEBUG = True
     TESTING = True
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-    DATABASE_URI = os.path.join(BASE_DIR, "test.db")
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     SECRET_KEY = "secret"
 
     # Mail settings
@@ -23,15 +27,17 @@ class ServerTestCase(unittest.TestCase):
 
         self.app = server.create_app(TestConfig)
 
-        #with self.app.app_context():
-        server.database.db.create_all()
+        with self.app.app_context():
+            db.drop_all()
+            db.create_all()
 
 
         self.client = self.app.test_client()
 
     def tearDown(self):
-        server.database.db.drop_all()
-        server.database.db.session.remove()
+        with self.app.app_context():
+            db.drop_all()
+            db.session.remove()
 
 
     def test_not_authenticated(self):
@@ -40,8 +46,6 @@ class ServerTestCase(unittest.TestCase):
                                        'data': {'authenticated': False}}
 
     def test_signup(self):
-        for user in server.models.user.User.query.all():
-            print user
 
         data = json.dumps(dict(username='test3',
                                password='test',
