@@ -1,7 +1,8 @@
 import sqlite3
 import bcrypt
 
-from flask import Blueprint, request, jsonify, session, abort, url_for, current_app
+from flask import (Blueprint, request, jsonify, session, abort, url_for,
+                   current_app)
 from itsdangerous import URLSafeSerializer, BadSignature
 
 from ..mail import mail, Message
@@ -122,6 +123,7 @@ def me():
 #     mail.send(msg)
 #     return 'sent message'
 
+
 def get_serializer(secret_key=None):
     if secret_key is None:
         secret_key = current_app.secret_key
@@ -151,7 +153,4 @@ def activate_user(payload):
     return "user activated"
 
 
-
-
-
-#from . import users, listings, books
+# from . import users, listings, books

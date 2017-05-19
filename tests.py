@@ -44,7 +44,7 @@ class ServerTestCase(unittest.TestCase):
     def test_not_authenticated(self):
         response = self.client.get('/api/me')
         assert json.loads(response.data) == {'status': 'success',
-                                       'data': {'authenticated': False}}
+                                             'data': {'authenticated': False}}
 
     def test_signup(self):
 
@@ -53,8 +53,8 @@ class ServerTestCase(unittest.TestCase):
                                email='test3@test.com'))
 
         response = self.client.post('/api/signup',
-                                 data=data,
-                                 content_type='application/json')
+                                    data=data,
+                                    content_type='application/json')
         print(response.data)
         assert 'success' in response.data
 

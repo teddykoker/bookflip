@@ -42,8 +42,8 @@ class Mail(object):
         else:
             server = connect_server()
             server.sendmail(message.sender,
-                        message.recipients,
-                        message.as_string())
+                            message.recipients,
+                            message.as_string())
 
             server.close()
 
