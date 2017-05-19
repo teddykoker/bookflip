@@ -1,5 +1,5 @@
 import functools
-from flask import jsonify
+from flask import jsonify, session, abort
 
 
 def jsonapi(f):
@@ -16,4 +16,17 @@ def jsonapi(f):
             'data': data
         })
 
+    return wrapped
+
+
+def auth(f):
+    """This decorator implements authentication for views"""
+
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+
+        if not session.get('user_id'):
+            abort(401)
+
+        return f(*args, **kwargs)
     return wrapped

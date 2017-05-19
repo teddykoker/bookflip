@@ -27,9 +27,10 @@ class ServerTestCase(unittest.TestCase):
 
         self.app = server.create_app(TestConfig)
 
-        with self.app.app_context():
-            db.drop_all()
-            db.create_all()
+        self.app_context = self.app.app_context():
+        self.app_context.push()
+
+        db.create_all()
 
 
         self.client = self.app.test_client()

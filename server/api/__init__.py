@@ -6,7 +6,7 @@ from itsdangerous import URLSafeSerializer, BadSignature
 
 from ..mail import mail, Message
 from ..models import db, User, Listing, Book
-from ..decorators import jsonapi
+from ..decorators import jsonapi, auth
 
 api = Blueprint('api', __name__)
 
@@ -78,6 +78,7 @@ def login():
 
 @api.route('/logout')
 @jsonapi
+@auth
 def logout():
     session.pop('user_id', None)
     return 'success', {}
