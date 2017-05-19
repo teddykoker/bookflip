@@ -4,28 +4,29 @@ import bcrypt
 from flask import Blueprint, request, jsonify, session, abort, url_for, current_app
 from itsdangerous import URLSafeSerializer, BadSignature
 
-from ..utils import api_response
-
 from ..mail import mail, Message
-
 from ..models import db, User, Listing, Book
+from ..decorators import jsonapi
 
 api = Blueprint('api', __name__)
 
 
 @api.route('/all')
+@jsonapi
 def all_listings():
 
     listings = [listing.serialized() for listing in Listing.query.all()]
-    return api_response('success', {'listings': listings})
+    return 'success', {'listings': listings}
 
 
 @api.route('/users')
+@jsonapi
 def all_users():
-    return api_response('success', {})
+    return 'success', {}
 
 
 @api.route('/signup', methods=['POST'])
+@jsonapi
 def signup():
     if (not request.json or 'email' not in request.json or
             'password' not in request.json or
@@ -34,11 +35,11 @@ def signup():
 
     if User.email_taken(request.json['email']):
         # report user with email already exists
-        return api_response('failed', 'email exists')
+        return 'failed', 'email exists'
 
     if User.username_taken(request.json['username']):
         # report user with username already exists
-        return api_response('failed', 'username exists')
+        return 'failed', 'username exists'
 
     # save user to database
     user = User(request.json['username'], request.json['email'],
@@ -50,10 +51,11 @@ def signup():
     print("click this link: " + get_activation_link(user) + " to activate")
 
     # registration was successful
-    return api_response('success')
+    return 'success', {}
 
 
 @api.route('/login', methods=['POST'])
+@jsonapi
 def login():
     if (not request.json or 'username' not in request.json or
             'password' not in request.json):
@@ -63,24 +65,26 @@ def login():
 
     if user is None:
         # report wrong username
-        return api_response('failed')
+        return 'failed', {}
 
     if user.check_password(request.json['password']):
         # login successful
         session["user_id"] = user.id
-        return api_response('success')
+        return 'success', {}
 
     # report wrong password
-    return api_response('failed')
+    return 'failed', {}
 
 
 @api.route('/logout')
+@jsonapi
 def logout():
     session.pop('user_id', None)
-    return jsonify({'status': 'success'})
+    return 'success', {}
 
 
 @api.route('/new-listing', methods=['POST'])
+@jsonapi
 def new_listing():
 
     book = Book.query.filter(
@@ -98,15 +102,15 @@ def new_listing():
     db.session.add(new_listing)
     db.session.commit()
 
-    return api_response('success')
+    return 'success', {}
 
 
 @api.route('/me')
+@jsonapi
 def me():
     if 'user_id' in session:
-        return api_response('success', {'authenticated': True})
-    return api_response('success', {'authenticated': False})
-
+        return 'success', {'authenticated': True}
+    return 'success', {'authenticated': False}
 
 # @api.route('/test-mail')
 # def test_mail():
