@@ -6,7 +6,7 @@ import json
 
 from server.models import db, User
 
-class TestConfig(object):
+class TestConfig:
     DEBUG = True
     TESTING = True
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -27,7 +27,7 @@ class ServerTestCase(unittest.TestCase):
 
         self.app = server.create_app(TestConfig)
 
-        self.app_context = self.app.app_context():
+        self.app_context = self.app.app_context()
         self.app_context.push()
 
         db.create_all()

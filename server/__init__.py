@@ -1,6 +1,6 @@
 from flask import Flask
-from models import db
-from mail import mail
+from .models import db
+from .mail import mail
 
 
 def create_app(config_module=None):
@@ -19,7 +19,7 @@ def create_app(config_module=None):
         """
         return app.send_static_file('index.html')
 
-    from api import api as api_blueprint
+    from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 
     return app
