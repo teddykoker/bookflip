@@ -43,7 +43,7 @@ class ServerTestCase(unittest.TestCase):
 
     def test_not_authenticated(self):
         response = self.client.get('/api/me')
-        assert json.loads(response.data) == {'status': 'success',
+        assert json.loads(response.data.decode('utf-8')) == {'status': 'success',
                                              'data': {'authenticated': False}}
 
     def test_signup(self):
@@ -56,7 +56,7 @@ class ServerTestCase(unittest.TestCase):
                                     data=data,
                                     content_type='application/json')
         print(response.data)
-        assert 'success' in response.data
+        assert 'success' in response.data.decode('utf-8')
 
 
     def test_a(self):
