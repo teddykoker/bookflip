@@ -32,7 +32,7 @@ export default {
   },
   mounted: function() {
     var self = this;
-    axios.get('/api/all').then(function(response) {
+    axios.get('/api/listings').then(function(response) {
       self.listings = response.data.data.listings
     }).catch(function(error) {
       console.log(error);

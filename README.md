@@ -82,8 +82,8 @@ All responses will look like the following:
 | `/api/login/`                            | username, password        | Logs in user          |
 | `/api/logout/`                           |                           | Logs out user         |
 | `/api/me/`                               |                           | Returns user status   |
-| `/api/new-listing` , changing to: `POST: /api/listings/` | listing                   | Creates a new listing |
-| `/api/all`, changing to: `GET: /api/listings/` |                           | Shows all listings    |
+| `POST: /api/listings/` | listing                   | Creates a new listing |
+| `GET: /api/listings/` |                           | Shows all listings    |
 |                                          |                           |                       |
 |                                          |                           |                       |
 |                                          |                           |                       |

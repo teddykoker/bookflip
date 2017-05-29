@@ -1,6 +1,8 @@
 import bcrypt
 
+from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
+from utils import get_serializer
 
 db = SQLAlchemy()
 
@@ -61,6 +63,14 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+
+    @property
+    def activation_link(self):
+        s = get_serializer()
+        payload = s.dumps(self.id)
+        return url_for('api.activate_user', payload=payload, _external=True)
+
 
     def activate(self):
         self.active = True

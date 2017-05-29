@@ -7,11 +7,12 @@ from itsdangerous import URLSafeSerializer, BadSignature
 from ..mail import mail, Message
 from ..models import db, User, Listing, Book
 from ..decorators import jsonapi
+from ..utils import get_serializer
 
 api = Blueprint('api', __name__)
 
 
-@api.route('/all')
+@api.route('/listings', methods=['GET'])
 @jsonapi
 def all_listings():
 
@@ -48,7 +49,7 @@ def signup():
     db.session.add(user)
     db.session.commit()
 
-    print("click this link: " + get_activation_link(user) + " to activate")
+    print("click this link: " + user.activation_link + " to activate")
 
     # registration was successful
     return 'success', {}
@@ -83,7 +84,7 @@ def logout():
     return 'success', {}
 
 
-@api.route('/new-listing', methods=['POST'])
+@api.route('/listings', methods=['POST'])
 @jsonapi
 def new_listing():
 
@@ -120,18 +121,6 @@ def me():
 
 #     mail.send(msg)
 #     return 'sent message'
-
-def get_serializer(secret_key=None):
-    if secret_key is None:
-        secret_key = current_app.secret_key
-    return URLSafeSerializer(secret_key)
-
-
-def get_activation_link(user):
-    s = get_serializer()
-    payload = s.dumps(user.id)
-    return url_for('api.activate_user', payload=payload, _external=True)
-
 
 @api.route('/activate/<payload>')
 def activate_user(payload):
