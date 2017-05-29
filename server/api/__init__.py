@@ -8,6 +8,7 @@ from itsdangerous import URLSafeSerializer, BadSignature
 from ..mail import mail, Message
 from ..models import db, User, Listing, Book
 from ..decorators import jsonapi, auth
+from ..utils import get_serializer
 
 api = Blueprint('api', __name__)
 
@@ -87,6 +88,7 @@ def logout():
 
 @api.route('/listings', methods=['POST'])
 @jsonapi
+@auth
 def new_listing():
 
     book = Book.query.filter(

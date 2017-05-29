@@ -1,6 +1,7 @@
 from flask import Flask
 from .models import db
 from .mail import mail
+from .decorators import jsonapi
 
 
 def create_app(config_module=None):
@@ -11,6 +12,9 @@ def create_app(config_module=None):
     db.init_app(app)
     mail.init_app(app)
 
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api')
+
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def catch_all(path):
@@ -18,8 +22,5 @@ def create_app(config_module=None):
         application
         """
         return app.send_static_file('index.html')
-
-    from .api import api as api_blueprint
-    app.register_blueprint(api_blueprint, url_prefix='/api')
 
     return app

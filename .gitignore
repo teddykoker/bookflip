@@ -8,3 +8,6 @@ venv
 *.pyc
 database.db
 instance
+
+# testing
+.coverage
