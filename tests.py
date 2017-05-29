@@ -6,7 +6,7 @@ import json
 
 from server.models import db, User
 
-class TestConfig(object):
+class TestConfig:
     DEBUG = True
     TESTING = True
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -27,9 +27,10 @@ class ServerTestCase(unittest.TestCase):
 
         self.app = server.create_app(TestConfig)
 
-        with self.app.app_context():
-            db.drop_all()
-            db.create_all()
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+
+        db.create_all()
 
 
         self.client = self.app.test_client()
@@ -42,8 +43,8 @@ class ServerTestCase(unittest.TestCase):
 
     def test_not_authenticated(self):
         response = self.client.get('/api/me')
-        assert json.loads(response.data) == {'status': 'success',
-                                       'data': {'authenticated': False}}
+        assert json.loads(response.data.decode('utf-8')) == {'status': 'success',
+                                             'data': {'authenticated': False}}
 
     def test_signup(self):
 
@@ -52,10 +53,10 @@ class ServerTestCase(unittest.TestCase):
                                email='test3@test.com'))
 
         response = self.client.post('/api/signup',
-                                 data=data,
-                                 content_type='application/json')
+                                    data=data,
+                                    content_type='application/json')
         print(response.data)
-        assert 'success' in response.data
+        assert 'success' in response.data.decode('utf-8')
 
 
     def test_a(self):

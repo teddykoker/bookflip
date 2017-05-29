@@ -3,7 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-class Mail(object):
+class Mail:
 
     def __init__(self, app=None):
         if app is not None:
@@ -42,15 +42,15 @@ class Mail(object):
         else:
             server = connect_server()
             server.sendmail(message.sender,
-                        message.recipients,
-                        message.as_string())
+                            message.recipients,
+                            message.as_string())
 
             server.close()
 
 mail = Mail()
 
 
-class Message(object):
+class Message:
 
     def __init__(self, subject='', recipients=[], body=None):
 

@@ -6,6 +6,7 @@ from utils import get_serializer
 
 db = SQLAlchemy()
 
+
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
@@ -78,8 +79,10 @@ class User(db.Model):
 
     @staticmethod
     def username_taken(username):
-        return db.session.query(db.exists().where(User.username == username)).scalar()
+        return db.session.query(
+            db.exists().where(User.username == username)).scalar()
 
     @staticmethod
     def email_taken(email):
-        return db.session.query(db.exists().where(User.email == email)).scalar()
+        return db.session.query(
+            db.exists().where(User.email == email)).scalar()

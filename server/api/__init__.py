@@ -1,13 +1,13 @@
 import sqlite3
 import bcrypt
 
-from flask import Blueprint, request, jsonify, session, abort, url_for, current_app
+from flask import (Blueprint, request, jsonify, session, abort, url_for,
+                   current_app)
 from itsdangerous import URLSafeSerializer, BadSignature
 
 from ..mail import mail, Message
 from ..models import db, User, Listing, Book
-from ..decorators import jsonapi
-from ..utils import get_serializer
+from ..decorators import jsonapi, auth
 
 api = Blueprint('api', __name__)
 
@@ -79,6 +79,7 @@ def login():
 
 @api.route('/logout')
 @jsonapi
+@auth
 def logout():
     session.pop('user_id', None)
     return 'success', {}
@@ -139,7 +140,4 @@ def activate_user(payload):
     return "user activated"
 
 
-
-
-
-#from . import users, listings, books
+# from . import users, listings, books
