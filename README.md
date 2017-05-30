@@ -3,7 +3,8 @@
 # bookflip
 
 [![Dependency Status](https://david-dm.org/tomkoker/bookflip.svg)](https://david-dm.org/tomkoker/bookflip)
-[![Code Climate](https://codeclimate.com/github/tomkoker/bookflip/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookflip) 
+[![Code Climate](https://codeclimate.com/github/tomkoker/bookflip/badges/gpa.svg)](https://codeclimate.com/github/tomkoker/bookflip)
+[![Build Status](https://travis-ci.org/tomkoker/bookflip.svg?branch=master)](https://travis-ci.org/tomkoker/bookflip)
 
 ## Author
 [Tom Koker](http://tomkoker.com)

@@ -4,7 +4,7 @@ node_modules/
 build.js
 
 # flask
-venv
+venv*
 *.pyc
 database.db
 instance
