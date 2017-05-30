@@ -54,11 +54,16 @@ class User(db.Model):
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
+
         self.password = bcrypt.hashpw(password.encode('utf-8'),
-                                      bcrypt.gensalt())
+                                      bcrypt.gensalt()).decode('utf-8')
+        # decoding to re-encode later to prevent bytestring confusion
+        # in python3
+
         self.active = False
 
     def check_password(self, password):
+        print(self.password)
         return bcrypt.checkpw(password.encode('utf-8'),
                               self.password.encode('utf-8'))
 
